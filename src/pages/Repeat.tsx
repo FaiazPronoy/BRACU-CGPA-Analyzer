@@ -39,7 +39,7 @@ export default function Repeat() {
   if (s.cgpa === null || !next || !latest) {
     return (
       <div className="page-head">
-        <h1>Repeat or retake</h1>
+        <h1>Repeat or Retake</h1>
         <p className="lead">Add your grades first, then come back to see which courses are worth taking again.</p>
         <button type="button" className="btn btn-primary" onClick={() => go('home')}>Add my grades</button>
       </div>
@@ -57,33 +57,39 @@ export default function Repeat() {
   return (
     <div className="stack">
       <div className="page-head">
-        <h1>Repeat or retake</h1>
+        <h1>Repeat or Retake</h1>
         <p className="lead">Taking a course again replaces the old grade. Say how many you can manage, and Hisab picks the ones that lift your CGPA the&nbsp;most.</p>
       </div>
 
       <section className="card controls" aria-label="Your plan">
         <p className="sentence">
-          <span>I can take</span>
-          <span className="stepper" role="group" aria-label="How many courses">
-            <button type="button" onClick={() => setN((v) => Math.max(1, v - 1))} disabled={n <= 1} aria-label="One fewer">{'−'}</button>
-            <output aria-live="polite">{n}</output>
-            <button type="button" onClick={() => setN((v) => Math.min(max, v + 1))} disabled={n >= max} aria-label="One more">+</button>
+          <span className="phrase">
+            <span>I will Repeat/Retake</span>
+            <span className="stepper" role="group" aria-label="How many courses">
+              <button type="button" onClick={() => setN((v) => Math.max(1, v - 1))} disabled={n <= 1} aria-label="One fewer">{'−'}</button>
+              <output aria-live="polite">{n}</output>
+              <button type="button" onClick={() => setN((v) => Math.min(max, v + 1))} disabled={n >= max} aria-label="One more">+</button>
+            </span>
           </span>
-          <span>{n === 1 ? 'course' : 'courses'} again and expect</span>
-          <select className="field inline mono" aria-label="Grade you expect" value={hope} onChange={(e) => setHope(e.target.value as LetterGrade)}>
-            {HOPES.map((g) => <option key={g} value={g}>{g === 'A' ? 'an A' : g === 'A-' ? 'an A-' : `a ${g}`}</option>)}
-          </select>
-          <span>in</span>
-          <select className="field inline" aria-label="Semester you are planning for" value={next} onChange={(e) => store.setNext(e.target.value)}>
-            {semesters.map((x) => <option key={x}>{x}</option>)}
-          </select>
+          <span className="phrase">
+            <span>{n === 1 ? 'course' : 'courses'} and expect</span>
+            <select className="field inline mono" aria-label="Grade you expect" value={hope} onChange={(e) => setHope(e.target.value as LetterGrade)}>
+              {HOPES.map((g) => <option key={g} value={g}>{g === 'A' ? 'an A' : g === 'A-' ? 'an A-' : `a ${g}`}</option>)}
+            </select>
+          </span>
+          <span className="phrase">
+            <span>in</span>
+            <select className="field inline" aria-label="Semester you are planning for" value={next} onChange={(e) => store.setNext(e.target.value)}>
+              {semesters.map((x) => <option key={x}>{x}</option>)}
+            </select>
+          </span>
         </p>
         <div className="toggle" role="radiogroup" aria-label="Which courses">
           <button type="button" role="radio" aria-checked={!wide} onClick={() => setWide(false)}>
-            <b>Courses within 2 semesters</b><span>F retakes and recent courses. You can take these at advising.</span>
+            <b>Last 2 semesters</b><span>Courses from your last 2 semesters, plus any F. You can take these at advising.</span>
           </button>
           <button type="button" role="radio" aria-checked={wide} onClick={() => setWide(true)}>
-            <b>Include older courses</b><span>Taken earlier. These need your Chairperson's permission.</span>
+            <b>Older than 2 semesters</b><span>Adds courses taken more than 2 semesters ago. These need your Chairperson's permission.</span>
           </button>
         </div>
       </section>

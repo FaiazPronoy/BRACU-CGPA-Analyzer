@@ -33,7 +33,7 @@ export default function ByHand() {
         </p>
       )}
 
-      <h3>After a repeat or retake</h3>
+      <h3>After a Repeat or Retake</h3>
       <ol className="how">
         <li><b>Take the old grade out:</b> subtract its points (old grade point × credits) from your total points.</li>
         <li><b>Put the new grade in:</b> add new grade point × credits.</li>

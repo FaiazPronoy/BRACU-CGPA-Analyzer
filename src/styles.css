@@ -1112,6 +1112,12 @@ table.plain .num {
   font-size: clamp(1.05rem, 2.4vw, 1.3rem);
   font-weight: 600;
 }
+.phrase {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  white-space: nowrap;
+}
 .stepper {
   display: inline-flex;
   align-items: center;

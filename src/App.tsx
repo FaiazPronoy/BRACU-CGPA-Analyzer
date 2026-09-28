@@ -51,7 +51,7 @@ function useDark() {
 // the four things people come to do, in the order they usually do them
 const NAV: { page: Page; label: string; icon: ReactNode }[] = [
   { page: 'home', label: 'My CGPA', icon: <Gauge /> },
-  { page: 'repeat', label: 'Repeat or retake', icon: <Rise /> },
+  { page: 'repeat', label: 'Repeat or Retake', icon: <Rise /> },
   { page: 'plan', label: 'Plan ahead', icon: <Calendar /> },
   { page: 'courses', label: 'My courses', icon: <Rows /> },
 ];

@@ -33,12 +33,12 @@ read from the sheet as well. Then the dashboard:
 - the CGPA at graduation if the remaining credits are all 4.00, half 4.00 and
   half 3.70, all 3.70, your average so far, or any grade you pick
 
-**2. Repeat or retake.** One sentence to fill in: "I can take 3 courses again and
-expect an A in Summer 2026". Hisab picks the courses that lift the CGPA most,
-either only courses within 2 semesters, which you can take at advising (F
-retakes, and repeats still inside their 2 semester window), or older courses too, which need the Chairperson's
-permission. Each pick says whether it is allowed and until when, and a course that needs
-permission says how many semesters ago it was first taken. You can also
+**2. Repeat or Retake.** One sentence to fill in: "I will Repeat/Retake 3
+courses and expect an A in Summer 2026". Hisab picks the courses that lift the
+CGPA most, either from the last 2 semesters plus any F, which you can take at
+advising, or older than 2 semesters too, which need the Chairperson's
+permission. Each pick says whether it is allowed and until when, and a course
+that needs permission says how many semesters ago it was first taken. You can also
 tick courses yourself.
 
 **3. Plan ahead.** Try next semester's courses, see what a target CGPA needs

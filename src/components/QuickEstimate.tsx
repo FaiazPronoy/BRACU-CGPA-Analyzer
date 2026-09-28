@@ -32,7 +32,7 @@ export default function QuickEstimate({ intro = 'No grade sheet at hand? Type th
           <p>Your CGPA becomes about <b className="mono big">{ok ? shown((cgpa * credits + gpa * termCredits) / (credits + termCredits)) : 'n/a'}</b></p>
         </div>
         <div className="sub-card">
-          <h3>After one repeat or retake</h3>
+          <h3>After one Repeat or Retake</h3>
           <div className="inputs three">
             <label>Old grade<select className="field mono" value={old} onChange={(e) => setOld(e.target.value as LetterGrade)}>{LETTER_GRADES.map((g) => <option key={g}>{g}</option>)}</select></label>
             <label>New grade<select className="field mono" value={fresh} onChange={(e) => setFresh(e.target.value as LetterGrade)}>{LETTER_GRADES.map((g) => <option key={g}>{g}</option>)}</select></label>

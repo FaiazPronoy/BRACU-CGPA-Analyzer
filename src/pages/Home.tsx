@@ -130,8 +130,8 @@ function Dashboard() {
         <a href="#/repeat" className="action">
           <span className="action-icon"><Rise /></span>
           <span className="action-text">
-            <b>Repeat or retake</b>
-            <span>{plan && plan.chosen.length ? `Best by the rules: ${two(plan.cgpa!)} with ${count(plan.chosen.length, 'repeat or retake', 'repeats or retakes')}.` : 'See which courses are worth taking again.'}</span>
+            <b>Repeat or Retake</b>
+            <span>{plan && plan.chosen.length ? `Your best ${count(plan.chosen.length, 'course')} could take you to ${two(plan.cgpa!)}.` : 'See which courses are worth taking again.'}</span>
           </span>
           <Arrow />
         </a>
@@ -205,7 +205,7 @@ function Dashboard() {
           </div>
         </div>
         {left === null ? <p className="muted">Pick your program to see where your CGPA can finish.</p> : left <= 0 ? (
-          <p className="muted">You have all {needed} credits. Your final CGPA is {two(cgpa)}, unless a repeat or retake changes it.</p>
+          <p className="muted">You have all {needed} credits. Your final CGPA is {two(cgpa)}, unless a Repeat or Retake changes it.</p>
         ) : (
           <>
             <p className="muted small">{left} credits to go. If they go like this, you graduate with:</p>
