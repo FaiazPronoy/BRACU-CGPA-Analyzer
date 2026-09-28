@@ -1,6 +1,6 @@
 # BRACU CGPA Analyzer
 
-**An accurate CGPA calculator for BRACU: upload your grade sheet, see your CGPA, plan your rise.**
+**An accurate CGPA calculator for BRACU: upload your grade sheet, see your CGPA, plan how to raise it.**
 
 Upload the grade sheet from Connect and the Analyzer works out every semester again,
 checks each one against what the sheet prints, and then answers the questions
