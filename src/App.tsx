@@ -67,10 +67,12 @@ export default function App() {
       <a href="#main" className="skip" onClick={(e) => { e.preventDefault(); document.getElementById('main')?.focus(); }}>Skip to the calculator</a>
       <header className="bar">
         <div className="wrap bar-inner">
-          <a href="#/" className="brand" aria-label="CGPA Analyzer, home">
+          <a href="#/" className="brand" aria-label="BRACU CGPA Analyzer, home">
             <img src="./favicon.svg" alt="" width={36} height={36} />
-            <span className="brand-name">CGPA Analyzer</span>
-            <span className="brand-sub">for BRAC University</span>
+            <span className="brand-text">
+              <span className="brand-uni">BRACU</span>
+              <span className="brand-name">CGPA Analyzer</span>
+            </span>
           </a>
           {has && (
             <nav className="nav" aria-label="Sections">

@@ -1,9 +1,9 @@
 {
-  "name": "cgpa-analyzer",
+  "name": "bracu-cgpa-analyzer",
   "private": true,
   "version": "1.0.0",
   "type": "module",
-  "description": "CGPA Analyzer: the BRACU CGPA calculator. Grade sheet import, repeat and retake analysis, all in the browser.",
+  "description": "BRACU CGPA Analyzer: upload your grade sheet, see every semester, find the repeats that lift your CGPA, and plan your target. All in the browser.",
   "scripts": {
     "dev": "vite",
     "build": "tsc --noEmit && vite build",

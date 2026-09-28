@@ -1,4 +1,4 @@
-/* CGPA Analyzer. Navy ink and a red pen, on a calm page. Colours are variables here;
+/* BRACU CGPA Analyzer. Navy ink and a red pen, on a calm page. Colours are variables here;
    dark mode is the second block. */
 
 :root {
@@ -223,16 +223,16 @@ svg {
   font-size: 1.2rem;
   letter-spacing: -0.03em;
 }
-.bar-inner:has(.nav) .brand-sub {
-  display: none;
+.brand-text {
+  display: grid;
+  line-height: 1.1;
 }
-.brand-sub {
-  white-space: nowrap;
-  font-size: 0.78rem;
-  font-weight: 600;
-  color: var(--ink-2);
-  padding-left: 10px;
-  border-left: 1px solid var(--line-2);
+.brand-uni {
+  font-family: var(--mono);
+  font-size: 0.66rem;
+  font-weight: 500;
+  letter-spacing: 0.16em;
+  color: var(--pen);
 }
 .nav {
   display: flex;
@@ -303,9 +303,6 @@ svg {
     flex-wrap: wrap;
     gap: 8px 12px;
     padding-top: 8px;
-  }
-  .brand-sub {
-    display: none;
   }
   .nav {
     order: 3;

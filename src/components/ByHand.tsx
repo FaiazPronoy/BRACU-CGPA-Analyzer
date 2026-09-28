@@ -10,7 +10,7 @@ export default function ByHand() {
   return (
     <section className="card by-hand" aria-labelledby="by-hand">
       <h2 id="by-hand">Check it yourself with a calculator</h2>
-      <p className="muted">Any phone calculator will do. This is exactly what CGPA Analyzer and Connect do.</p>
+      <p className="muted">Any phone calculator will do. This is exactly what BRACU CGPA Analyzer and Connect do.</p>
 
       <h3>Your CGPA</h3>
       <ol className="how">

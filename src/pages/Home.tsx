@@ -46,7 +46,7 @@ function Landing() {
       <div id="quick">
         <QuickEstimate intro="Rather not upload your grade sheet? Type the CGPA and credits shown on Connect, and see what next semester or a repeat would do." />
       </div>
-      <section className="features" aria-label="What CGPA Analyzer does">
+      <section className="features" aria-label="What BRACU CGPA Analyzer does">
         {[
           ['See every semester', 'A graph of your CGPA, your best and toughest terms, and your VC\'s and Dean\'s Lists.'],
           ['Know what to repeat', 'The repeats or retakes that lift your CGPA most, within BRACU\'s rules.'],

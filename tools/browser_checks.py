@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-Browser checks for CGPA Analyzer, in a real browser through Playwright.
+Browser checks for BRACU CGPA Analyzer, in a real browser through Playwright.
 
   1. pages     every page, empty and with a transcript, loads without errors
   2. contrast  every piece of text against WCAG AA, light and dark

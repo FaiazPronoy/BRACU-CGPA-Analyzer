@@ -58,7 +58,7 @@ export default function Repeat() {
     <div className="stack">
       <div className="page-head">
         <h1>Repeat or Retake</h1>
-        <p className="lead">Taking a course again replaces the old grade. Say how many you can manage, and CGPA Analyzer picks the ones that lift your CGPA the&nbsp;most.</p>
+        <p className="lead">Taking a course again replaces the old grade. Say how many you can manage, and the Analyzer picks the ones that lift your CGPA the&nbsp;most.</p>
       </div>
 
       <section className="card controls" aria-label="Your plan">

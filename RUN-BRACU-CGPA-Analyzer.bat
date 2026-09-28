@@ -1,9 +1,9 @@
 @echo off
-title CGPA Analyzer - BRACU
+title BRACU CGPA Analyzer
 cd /d "%~dp0"
 
 echo ==========================================
-echo   CGPA ANALYZER  -  BRAC University
+echo   BRACU CGPA ANALYZER
 echo ==========================================
 echo.
 
@@ -24,7 +24,7 @@ if errorlevel 1 (
 )
 :ready
 
-echo [2/2] Starting CGPA Analyzer at http://localhost:5180
+echo [2/2] Starting BRACU CGPA Analyzer at http://localhost:5180
 echo       Close this window to stop it.
 echo.
 rem open the browser a few seconds later, once the server is up
