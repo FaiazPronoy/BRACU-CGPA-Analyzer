@@ -947,3 +947,39 @@ table.plain th.num {
     grid-template-columns: minmax(0, 1fr);
   }
 }
+
+.ways {
+  list-style: none;
+  padding: 0;
+  margin: 8px 0 0;
+}
+.ways li {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 9px 0;
+  border-top: 1px dashed var(--line);
+}
+
+.grade-counts {
+  list-style: none;
+  padding: 0;
+  margin: 10px 0 0;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(62px, 1fr));
+  gap: 6px;
+}
+.grade-counts li {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 6px;
+  padding: 6px 9px;
+  border-radius: 9px;
+  background: var(--sunk);
+  font-size: 0.9rem;
+}
+.grade-counts b {
+  font-family: var(--display);
+}

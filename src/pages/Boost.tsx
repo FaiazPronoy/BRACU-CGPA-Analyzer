@@ -59,7 +59,8 @@ export default function Boost() {
   const [picked, setPicked] = useState<Record<string, LetterGrade | undefined>>({});
   const [showAll, setShowAll] = useState(false);
 
-  const all = useMemo(() => (next ? candidates(valid, next, hope) : []), [valid, next, hope]);
+  // courses already at A- or better are not worth taking again, so they stay out of every list
+  const all = useMemo(() => (next ? candidates(valid, next, hope).filter((c) => GRADE_POINTS[c.attempt.grade as LetterGrade] < 3.7) : []), [valid, next, hope]);
   const allowedCount = all.filter((c) => c.allowed !== 'no').length;
   const max = Math.max(1, Math.min(10, allowedCount));
   useEffect(() => {

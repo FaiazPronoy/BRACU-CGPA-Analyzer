@@ -1,6 +1,9 @@
 import { useState } from 'react';
 import { Plus, Trash } from '../components/bits';
+import { go } from '../App';
+import { Candidate, candidates } from '../engine/boost';
 import { add, gpaOf, GRADE_POINTS, LETTER_GRADES, LetterGrade, neededGpa, Sums } from '../engine/grades';
+import { planTarget } from '../engine/targets';
 import { useLang } from '../i18n';
 import { useStore } from '../store';
 
@@ -64,7 +67,7 @@ function NextSemester({ sums }: { sums: Sums }) {
   );
 }
 
-function Target({ sums, earned, needed }: { sums: Sums; earned: number; needed: number | null }) {
+function Target({ sums, earned, needed, byRules, withPermission }: { sums: Sums; earned: number; needed: number | null; byRules: Candidate[]; withPermission: Candidate[] }) {
   const { t, num } = useLang();
   const now = gpaOf(sums);
   const [target, setTarget] = useState(() => Math.min(4, Math.max(2, Math.ceil(((now ?? 3) + 0.1) * 20) / 20)));
@@ -102,15 +105,78 @@ function Target({ sums, earned, needed }: { sums: Sums; earned: number; needed: 
           <p className="hint">{t('plan.leftHint', { n: earned })}</p>
         </div>
       </div>
-      {need !== null && verdict && (
-        <div className={`notice ${verdict === 'out' ? 'warn' : verdict === 'push' ? '' : 'good'}`} style={{ marginTop: 14, display: 'block' }}>
-          <p className="small muted">{t('plan.youNeed', { credits: left })}</p>
-          <p className="big-number" style={{ color: verdict === 'out' ? 'var(--pen)' : undefined }}>
-            {verdict === 'there' ? t('plan.nothing') : verdict === 'out' ? t('plan.over4') : num(ceil2(need), 2)}
-          </p>
-          <p style={{ marginTop: 4 }}>{t(`plan.verdict_${verdict}`, { target: num(target, 2), n: semesters })}</p>
-        </div>
-      )}
+      {(() => {
+        if (now !== null && now >= target && (left === 0 || verdict === 'there')) {
+          return <div className="notice good" style={{ marginTop: 14 }}><p>{t('plan.alreadyThere', { target: num(target, 2) })}</p></div>;
+        }
+        const plan = planTarget(sums, left, target, byRules);
+        const gp = (g: LetterGrade) => `${g} (${num(GRADE_POINTS[g], 2)})`;
+        if (plan.reachable) {
+          return (
+            <div style={{ marginTop: 14 }}>
+              {need !== null && verdict && (
+                <div className={`notice ${verdict === 'push' ? '' : 'good'}`} style={{ display: 'block' }}>
+                  <p className="small muted">{t('plan.youNeed', { credits: left })}</p>
+                  <p className="big-number">{num(Math.max(0, ceil2(need)), 2)}</p>
+                  <p style={{ marginTop: 4 }}>{t(`plan.verdict_${verdict}`, { target: num(target, 2), n: semesters })}</p>
+                </div>
+              )}
+              <h3 style={{ marginTop: 16 }}>{t('plan.waysTitle', { n: plan.courses.length })}</h3>
+              <ul className="ways">
+                {plan.mixes.map((m) => (
+                  <li key={`${m.high}${m.highCourses}${m.low}`}>
+                    <span>
+                      {m.lowCourses === 0
+                        ? t('plan.wayAll', { n: m.highCourses, grade: gp(m.high) })
+                        : t(m.highCourses === 1 ? 'plan.wayMixOne' : 'plan.wayMix', { high: m.highCourses, hg: gp(m.high), low: m.lowCourses, lg: gp(m.low) })}
+                    </span>
+                    <b className="mono">{num(m.cgpa, 2)}</b>
+                  </li>
+                ))}
+              </ul>
+              <p className="hint">{t('plan.waysNote')}</p>
+            </div>
+          );
+        }
+        // not with new courses alone: look for repeats, by the rules first, then with permission
+        const strict = planTarget(sums, left, target, byRules);
+        const loose = strict.repeats ? strict : planTarget(sums, left, target, withPermission);
+        const fix = strict.repeats ?? loose.repeats;
+        const needsPermission = !strict.repeats && !!loose.repeats;
+        const best = Math.max(strict.best ?? 0, loose.best ?? 0, plan.allFour ?? 0);
+        return (
+          <div style={{ marginTop: 14 }}>
+            <div className="notice warn" style={{ display: 'block' }}>
+              <p style={{ fontWeight: 800 }}>{t('plan.notPossible', { target: num(target, 2) })}</p>
+              <p className="small" style={{ marginTop: 4 }}>
+                {left > 0 ? t('plan.notPossibleText', { n: plan.courses.length, cgpa: num(plan.allFour ?? 0, 2) }) : t('plan.noneLeftText')}
+              </p>
+            </div>
+            {fix ? (
+              <div className="card sunk" style={{ marginTop: 12 }}>
+                <h3>{t('plan.fixTitle', { n: fix.chosen.length })}</h3>
+                <p className="small muted" style={{ marginTop: 4 }}>
+                  {left > 0 ? t('plan.fixText', { n: plan.courses.length }) : t('plan.fixTextNoLeft')}
+                </p>
+                <ul className="ways">
+                  {fix.chosen.map((c) => (
+                    <li key={c.attempt.id}>
+                      <span><span className="code">{c.attempt.code}</span> <span className="muted small">{c.attempt.grade} {'\u2192'} A</span>
+                        {c.allowed === 'permission' && <span className="tag warn" style={{ marginLeft: 6 }}>{t('status.permissionShort')}</span>}</span>
+                      <span className="small muted">{t(`kind.${c.kind}`)}</span>
+                    </li>
+                  ))}
+                </ul>
+                <p style={{ marginTop: 8 }}>{t('plan.fixResult')} <b className="mono" style={{ fontSize: '1.2rem' }}>{num(fix.cgpa ?? 0, 2)}</b></p>
+                {needsPermission && <p className="hint">{t('plan.fixPermission')}</p>}
+                <button type="button" className="btn btn-line btn-sm no-print" style={{ marginTop: 8 }} onClick={() => go('boost')}>{t('plan.fixOpen')}</button>
+              </div>
+            ) : (
+              <p style={{ marginTop: 12 }}>{t('plan.lower', { best: num(best, 2) })}</p>
+            )}
+          </div>
+        );
+      })()}
       {left === 0 && <p className="hint" style={{ marginTop: 10 }}>{t('plan.noneLeft')}</p>}
     </section>
   );
@@ -194,7 +260,11 @@ function Quick() {
 
 export default function Plan() {
   const { t } = useLang();
-  const { totals: s, needed } = useStore();
+  const { totals: s, needed, valid, next } = useStore();
+  // biggest gains first; courses already at A- or better are left out
+  const pool = next ? candidates(valid, next, 'A').filter((c) => GRADE_POINTS[c.attempt.grade as LetterGrade] < 3.7) : [];
+  const byRules = pool.filter((c) => c.allowed === 'yes');
+  const withPermission = pool.filter((c) => c.allowed !== 'no');
   const has = s.cgpa !== null;
   return (
     <div className="stack" style={{ '--gap': '22px' } as React.CSSProperties}>
@@ -204,7 +274,7 @@ export default function Plan() {
         <p className="lead">{has ? t('plan.lead') : t('plan.leadEmpty')}</p>
       </div>
       {has && <NextSemester sums={s.sums} />}
-      {has && <Target sums={s.sums} earned={s.earned} needed={needed} />}
+      {has && <Target sums={s.sums} earned={s.earned} needed={needed} byRules={byRules} withPermission={withPermission} />}
       <Quick />
     </div>
   );

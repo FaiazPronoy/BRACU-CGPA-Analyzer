@@ -1,11 +1,14 @@
 import { useState } from 'react';
 import { honourOf, LETTER_GRADES, GRADE_POINTS, LetterGrade, projectedCgpa, projectedSplit } from '../engine/grades';
 import { PROGRAMS } from '../engine/programs';
+import { gradeCounts } from '../engine/targets';
 import { useLang } from '../i18n';
 import { useStore } from '../store';
 
 // The side panel on the overview: which program, how far through it, the
 // semester lists, and where the CGPA lands at graduation under a few plans.
+const ALL_ORDER = [...LETTER_GRADES, 'P', 'I', 'W'] as string[];
+
 export default function Dashboard() {
   const { t, num, sem } = useLang();
   const store = useStore();
@@ -82,6 +85,18 @@ export default function Dashboard() {
           </ul>
         ) : <p className="small muted" style={{ marginTop: 8 }}>{t('dash.noLists')}</p>}
         <p className="hint" style={{ marginTop: 8 }}>{t('dash.listRule')}</p>
+      </section>
+
+      <section className="card" aria-labelledby="d-grades">
+        <h2 id="d-grades" style={{ fontSize: '1.05rem' }}>{t('dash.grades')}</h2>
+        <ul className="grade-counts">
+          {[...gradeCounts([...s.counted.values()].map((a) => a.grade))]
+            .sort((x, y) => ALL_ORDER.indexOf(x[0]) - ALL_ORDER.indexOf(y[0]))
+            .map(([g, n]) => (
+              <li key={g}><span className="mono">{g}</span><b>{num(n)}</b></li>
+            ))}
+        </ul>
+        <p className="hint" style={{ marginTop: 8 }}>{t('dash.gradesNote')}</p>
       </section>
 
       <section className="card" aria-labelledby="d-outlook">
