@@ -1,4 +1,4 @@
-# Hisab (হিসাব)
+# Hisab
 
 **The BRACU CGPA calculator that counts exactly the way your grade sheet does.**
 
@@ -17,37 +17,41 @@ grade sheet never leaves the device.
 
 ## What is in it
 
-**1. Grades.** Upload the Connect grade sheet (PDF), try a sample transcript,
-or type semesters in by hand. After an upload, every semester's GPA, CGPA and
-credit totals are recomputed and compared with the sheet's own summary lines,
-and the page says so if anything disagrees. The program (CSE, BBA, and so on)
-is read from the sheet as well.
+Four pages, each named after the job it does:
 
-**2. Overview.** A graph of the CGPA across semesters, with each semester's GPA
-behind it, the probation and distinction lines, and the biggest jump and drop
-marked. Beside it, a dashboard:
-- the program and how many credits are left
-- VC's List and Dean's List counts, and which semesters
+**1. My CGPA.** Upload the Connect grade sheet (PDF), try a sample student, or
+type semesters in by hand. After an upload, every semester's GPA, CGPA and
+credit totals are recomputed and compared with the sheet's own summary lines,
+and a dialog says whether they all match. The program (CSE, BBA, and so on) is
+read from the sheet as well. Then the dashboard:
+- the CGPA, standing and year level, credits done out of the program total,
+  and VC's List and Dean's List counts
+- a graph of the CGPA across semesters, each semester's GPA behind it, the
+  probation line, and the biggest jump and drop marked (or the same as a table)
+- best and toughest semester, and how many of each grade
 - the CGPA at graduation if the remaining credits are all 4.00, half 4.00,
   all 3.70, your average so far, or any grade you pick
 
-Below: best and toughest semester, academic standing, year level and
-distinction band.
+**2. Raise it.** One sentence to fill in: "I can take 3 courses again and
+expect an A in Summer 2026". Hisab picks the courses that lift the CGPA most,
+either only what you can register for (F retakes, and repeats still inside
+their 2 semester window) or older courses too, which need the Chairperson's
+permission. Each pick says whether it is allowed and until when. You can also
+tick courses yourself.
 
-**3. Boost.** Choose how many courses to take again, the grade you expect and
-the semester you are planning for. Hisab finds the best set under three rules:
-by the book (F retakes, and repeats still inside their 2 semester window), with
-the Head of Department's permission (older courses too), and F retakes only.
-It shows the CGPA after the best 1, 2, 3 and more, and a list to pick your own,
-each course marked with whether it is allowed and why.
+**3. Plan ahead.** Try next semester's courses, see what a target CGPA needs
+(with mixes like "10 courses at A and 7 at A-", and which repeats would make an
+impossible target possible), or get a quick estimate from just a CGPA and
+credits.
 
-**4. Plan.** Try next semester's courses, work out the average GPA needed to
-reach a target CGPA, or get a quick estimate from just a CGPA and credits.
+**4. My courses.** Every semester, folded away until you open it. Edit, add or
+remove a course or a semester, upload a new grade sheet, or **Start over**,
+which clears everything after asking once. Start over is also in the top bar.
 
-**5. BRACU rules.** The grading scale and the policies behind every number, in
-plain words.
+**BRACU rules.** The grading scale and the policies behind every number, as
+questions a student would ask.
 
-English and Bangla, light and dark, and it works on a phone.
+Light and dark, and it works on a phone.
 
 ## How the numbers are worked out
 
@@ -116,9 +120,11 @@ npm test           # the unit tests (and your own sheets in fixtures/private)
 npm run build      # the static site, in dist/
 ```
 
-`tools/browser_checks.py` (Playwright) opens every page in English and Bangla,
-light and dark, and checks for console errors, WCAG AA contrast and sideways
-scrolling at 390 px. Start `npm run dev` first.
+`tools/browser_checks.py` (Playwright) opens every page, light and dark, empty
+and with a transcript, and checks for console errors, WCAG AA contrast and
+sideways scrolling at 390 px. It also runs Start over, imports any sheets in
+`fixtures/private/`, and saves screenshots to `tools/shots/`. Start
+`npm run dev` first.
 
 ## Putting it online
 
@@ -133,8 +139,7 @@ routes, so `dist/` works from anywhere:
 ## Made with
 
 React 18, TypeScript and Vite. pdf.js reads the grade sheet. The chart is
-hand-drawn SVG, with no chart library. Fonts: Sora, Manrope, DM Mono, Caveat and
-Noto Sans Bengali.
+hand-drawn SVG, with no chart library. Fonts: Sora, Manrope, DM Mono and Caveat.
 
 ## Not official
 

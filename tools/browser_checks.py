@@ -3,10 +3,13 @@
 Browser checks for Hisab, in a real browser through Playwright.
 
   1. pages     every page, empty and with a transcript, loads without errors
-  2. contrast  every piece of text against WCAG AA, light and dark, English and Bangla
+  2. contrast  every piece of text against WCAG AA, light and dark
   3. phone     nothing scrolls sideways at 390 px
-  4. sheet     a real grade sheet from fixtures/private, if there is one,
+  4. reset     Start over asks first, then clears every grade
+  5. sheet     a real grade sheet from fixtures/private, if there is one,
                imports and every semester matches
+
+Screenshots of each page go to tools/shots (gitignored).
 
 Start the site first (npm run dev, on :5180), then:
 
@@ -22,7 +25,8 @@ BASE = os.environ.get("HB_BASE", "http://localhost:5180/")
 CHANNEL = os.environ.get("HB_BROWSER", "msedge")
 HERE = os.path.dirname(os.path.abspath(__file__))
 SHEETS = sorted(glob.glob(os.path.join(HERE, "..", "fixtures", "private", "*.pdf")))
-PAGES = ["grades", "overview", "boost", "plan", "rules"]
+PAGES = ["home", "raise", "plan", "courses", "rules"]
+SHOTS = os.path.join(HERE, "shots")
 PASS, FAIL = [], []
 
 
@@ -111,16 +115,16 @@ CONTRAST_JS = r"""
 """
 
 
-def context(browser, lang, theme, width=1366):
+def context(browser, theme, width=1366):
     ctx = browser.new_context(viewport={"width": width, "height": 900})
-    ctx.add_init_script("try { localStorage.setItem('hisab:lang', '%s'); localStorage.setItem('hisab:theme', '%s') } catch (e) {}" % (lang, theme))
+    ctx.add_init_script("try { localStorage.setItem('hisab:theme', '%s') } catch (e) {}" % theme)
     return ctx
 
 
 def load_sample(page):
-    page.goto(BASE + "#/grades")
+    page.goto(BASE + "#/home")
     page.wait_for_load_state("networkidle")
-    page.locator(".row .btn-line").first.click()
+    page.get_by_role("button", name="Try a sample student").click()
     page.wait_for_timeout(500)
 
 
@@ -128,54 +132,70 @@ def main():
     with sync_playwright() as p:
         browser = p.chromium.launch(channel=CHANNEL)
 
-        for lang in ("en", "bn"):
-            print("\n=== %s ===" % lang)
-            for theme in ("light", "dark"):
-                ctx = context(browser, lang, theme)
-                page = ctx.new_page()
-                errors = []
-                page.on("pageerror", lambda e: errors.append(str(e)))
-                page.on("console", lambda m: errors.append(m.text) if m.type == "error" else None)
-                # empty first, then with the sample transcript
-                fails, total = [], 0
-                for stage in ("empty", "sample"):
-                    if stage == "sample":
-                        load_sample(page)
-                    for name in PAGES:
-                        page.goto(BASE + "#/" + name)
-                        page.wait_for_timeout(350)
-                        res = page.evaluate(CONTRAST_JS)
-                        total += res["checked"]
-                        fails += [(stage, name, b) for b in res["bad"]]
-                check("%s %s: %d pages load without errors" % (lang, theme, len(PAGES) * 2), not errors, errors[:3])
-                check("%s %s: %d text checks pass AA" % (lang, theme, total), not fails, fails[:8])
-                ctx.close()
-
-            ctx = context(browser, lang, "light", 390)
+        os.makedirs(SHOTS, exist_ok=True)
+        for theme in ("light", "dark"):
+            print("\n=== %s ===" % theme)
+            ctx = context(browser, theme)
             page = ctx.new_page()
-            wide = {}
+            errors = []
+            page.on("pageerror", lambda e: errors.append(str(e)))
+            page.on("console", lambda m: errors.append(m.text) if m.type == "error" else None)
+            # empty first, then with the sample transcript
+            fails, total = [], 0
             for stage in ("empty", "sample"):
                 if stage == "sample":
                     load_sample(page)
                 for name in PAGES:
                     page.goto(BASE + "#/" + name)
                     page.wait_for_timeout(350)
-                    w = page.evaluate("document.documentElement.scrollWidth")
-                    if w > 390:
-                        wide["%s/%s" % (stage, name)] = w
-            check("%s: nothing scrolls sideways at 390 px" % lang, not wide, wide)
+                    res = page.evaluate(CONTRAST_JS)
+                    total += res["checked"]
+                    fails += [(stage, name, b) for b in res["bad"]]
+                    page.screenshot(path=os.path.join(SHOTS, "%s-%s-%s.png" % (theme, stage, name)), full_page=True)
+            check("%s: %d pages load without errors" % (theme, len(PAGES) * 2), not errors, errors[:3])
+            check("%s: %d text checks pass AA" % (theme, total), not fails, fails[:8])
             ctx.close()
+
+        print("\n=== phone and reset ===")
+        ctx = context(browser, "light", 390)
+        page = ctx.new_page()
+        wide = {}
+        for stage in ("empty", "sample"):
+            if stage == "sample":
+                load_sample(page)
+            for name in PAGES:
+                page.goto(BASE + "#/" + name)
+                page.wait_for_timeout(350)
+                w = page.evaluate("document.documentElement.scrollWidth")
+                if w > 390:
+                    wide["%s/%s" % (stage, name)] = w
+                page.screenshot(path=os.path.join(SHOTS, "phone-%s-%s.png" % (stage, name)), full_page=True)
+        check("nothing scrolls sideways at 390 px", not wide, wide)
+
+        # Start over: cancelling keeps the grades, confirming clears them
+        page.goto(BASE + "#/home")
+        page.get_by_role("button", name="Start over with a new grade sheet").click()
+        page.get_by_role("button", name="Keep my grades").click()
+        kept = page.evaluate("(JSON.parse(localStorage.getItem('hisab:v1') || '{}').attempts || []).length")
+        check("Keep my grades leaves the grades alone", kept > 0, kept)
+        page.get_by_role("button", name="Start over with a new grade sheet").click()
+        page.get_by_role("button", name="Yes, start over").click()
+        page.wait_for_timeout(300)
+        left = page.evaluate("(JSON.parse(localStorage.getItem('hisab:v1') || '{}').attempts || []).length")
+        back = page.get_by_role("button", name="Try a sample student").is_visible()
+        check("Start over clears every grade and goes back to the upload page", left == 0 and back, (left, back))
+        ctx.close()
 
         if SHEETS:
             print("\n=== real grade sheets ===")
             for sheet in SHEETS:
-                ctx = context(browser, "en", "light")
+                ctx = context(browser, "light")
                 page = ctx.new_page()
-                page.goto(BASE + "#/grades")
+                page.goto(BASE + "#/home")
                 page.wait_for_load_state("networkidle")
                 page.set_input_files("input[type=file]", sheet)
-                page.wait_for_selector("section[aria-labelledby=check-title]", timeout=20000)
-                text = page.inner_text("section[aria-labelledby=check-title]")
+                page.wait_for_selector("dialog[open]", timeout=20000)
+                text = page.inner_text("dialog[open]")
                 check("%s: every semester matches the sheet" % os.path.basename(sheet), "semesters match your sheet" in text, text[:160])
                 ctx.close()
 

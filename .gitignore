@@ -11,3 +11,4 @@ fixtures/private/
 tools/out/
 __pycache__/
 *.tmp.mjs
+tools/shots/

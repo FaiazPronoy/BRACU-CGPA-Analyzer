@@ -1,115 +1,86 @@
 import { GRADE_POINTS, LETTER_GRADES, MARKS } from '../engine/grades';
-import { useLang } from '../i18n';
 
-const REMARK: Partial<Record<string, string>> = { 'A+': 'exceptional', A: 'excellent', B: 'good', C: 'fair', D: 'poor', F: 'failure' };
+const REMARK: Partial<Record<string, string>> = { 'A+': 'Exceptional', A: 'Excellent', B: 'Good', C: 'Fair', D: 'Poor', F: 'Failure' };
 
-function Block({ id, children }: { id: string; children: React.ReactNode }) {
-  const { t } = useLang();
-  return (
-    <section className="card" aria-labelledby={`r-${id}`}>
-      <h2 id={`r-${id}`}>{t(`rules.${id}.title`)}</h2>
-      <div className="stack small" style={{ '--gap': '8px', marginTop: 8 } as React.CSSProperties}>{children}</div>
-    </section>
-  );
-}
+// each rule as a question a student would actually ask
+const RULES: [string, string[]][] = [
+  ['How is my CGPA worked out?', [
+    'CGPA = sum of (grade points × credits) ÷ the credits that count. For each course only the attempt that counts is used; courses numbered 001 to 099 are remedial or non-credit and do not count.',
+    'Rounding: Connect takes the CGPA to three decimals, then a 5 or more in the third decimal rounds up. So 3.895 shows as 3.90 and 3.894 as 3.89, and 156.3 ÷ 51 = 3.0647 becomes 3.065 and then 3.07. Checked against every figure on real grade sheets.',
+  ]],
+  ['What happens when I retake an F?', [
+    'A course with an F may be retaken twice; a third try only by exception from the Chairperson or the Dean (for example on probation). Non-credit courses (091, 092) in the first or second semester get one retake.',
+    'The best grade counts. The earlier attempts stay on the sheet as NT and still count as credits attempted.',
+  ]],
+  ['Can I repeat a course I passed?', [
+    "Once per course, to improve the grade, within 2 semesters of first taking it. Later than that needs your Chairperson's permission.",
+    'The latest grade counts, even if it comes out lower. The old attempt stays on the sheet as NT.',
+  ]],
+  ['What about P, I and W?', [
+    'None of them carries grade points, so none changes your GPA. A P still earns its credits, and a W or I never replaces an earlier grade.',
+    'Incomplete turns into an F if you miss the make-up exam. Pass/Fail needs the instructor to agree: at most 4 credits a semester and 16 in total.',
+  ]],
+  ["How do I get on the VC's List or the Dean's List?", [
+    "A semester GPA of 3.90 to 4.00 puts you on the VC's List; 3.70 to 3.89 on the Dean's List.",
+    'You need at least 12 letter-graded credits that semester (9 in the Residential Semester), no F, W or I, and no retake or repeat in it.',
+  ]],
+  ['When am I on probation?', [
+    'Joined in Summer 2022 or later: a CGPA under 2.00 puts you on probation, with 3 semesters in a row to get back to 2.00 (2 for Pharmacy and LLB). After that you are considered for withdrawal, though the Dean or Chairperson can recommend more time.',
+    'Joined before Summer 2022: the line was 1.50, with 2 semesters to recover, and a CGPA of 2.00 needed by the end of the sixth semester.',
+  ]],
+  ['What do I need to graduate, and with honours?', [
+    'The credits your program asks for (at least 120; CSE is 136), at least 70 of them at BRAC University, a CGPA of at least 2.00, and the Residential Semester.',
+    "Distinction: 3.50 to 3.64. High Distinction: 3.65 to 3.79. Highest Distinction: 3.80 or more. The Chancellor's and Vice Chancellor's Gold Medals go to the top CGPAs, with at least 3.65.",
+  ]],
+  ['What is my year level and course load?', [
+    'By credits earned: Freshman up to 30, Sophomore 31 to 60, Junior 61 to 90, Senior 91 to 140, Advanced Senior above 140.',
+    'A semester is usually 9 to 15 credits (18 with approval); the first semester is 9 credits or three courses.',
+  ]],
+];
 
 export default function Rules() {
-  const { t, num } = useLang();
-  const p = (key: string) => <p>{t(key)}</p>;
-
   return (
-    <div className="stack" style={{ '--gap': '22px' } as React.CSSProperties}>
-      <div>
-        <p className="eyebrow">{t('rules.eyebrow')}</p>
-        <h1 className="page-title">{t('rules.title')}</h1>
-        <p className="lead">{t('rules.lead')}</p>
+    <div className="stack">
+      <div className="page-head">
+        <h1>How BRACU grades</h1>
+        <p className="lead">The grading scale and every rule behind your numbers, in plain words. Straight from the university's policy pages.</p>
       </div>
-
-      <div className="grid cols-2" style={{ alignItems: 'start' }}>
+      <div className="rules-grid">
         <section className="card" aria-labelledby="scale">
-          <h2 id="scale">{t('rules.scale')}</h2>
-          <div className="table-wrap" style={{ marginTop: 8 }}>
+          <h2 id="scale">The grading scale</h2>
+          <div className="table-wrap">
             <table className="plain">
-              <thead>
-                <tr>
-                  <th scope="col">{t('rules.grade')}</th>
-                  <th scope="col">{t('rules.marks')}</th>
-                  <th scope="col" className="num">{t('rules.points')}</th>
-                  <th scope="col">{t('rules.remark')}</th>
-                </tr>
-              </thead>
+              <thead><tr><th scope="col">Grade</th><th scope="col">Marks</th><th scope="col" className="num">Points</th><th scope="col">Meaning</th></tr></thead>
               <tbody>
                 {LETTER_GRADES.map((g) => {
                   const [lo, hi] = MARKS[g];
                   return (
                     <tr key={g}>
                       <th scope="row" className="mono">{g}</th>
-                      <td>{g === 'A+' ? t('rules.rangeTop', { lo: num(lo) }) : g === 'F' ? t('rules.rangeBottom', { hi: num(hi) }) : t('rules.range', { lo: num(lo), hi: num(hi) })}</td>
-                      <td className="num">{num(GRADE_POINTS[g], 1)}</td>
-                      <td className="muted">{REMARK[g] ? t(`rules.remarks.${REMARK[g]}`) : ''}</td>
+                      <td>{g === 'A+' ? `${lo} to 100` : g === 'F' ? `under ${hi}` : `${lo} to under ${hi}`}</td>
+                      <td className="num">{GRADE_POINTS[g].toFixed(1)}</td>
+                      <td className="muted">{REMARK[g] ?? ''}</td>
                     </tr>
                   );
                 })}
               </tbody>
             </table>
           </div>
-          <p className="small muted" style={{ marginTop: 8 }}>{t('rules.aPlus')}</p>
-          <p className="small muted" style={{ marginTop: 4 }}>{t('rules.noValue')}</p>
+          <p className="muted small">A+ has been given since Fall 2020 and is worth 4.0, the same as an A.</p>
         </section>
-
-        <div className="stack" style={{ '--gap': '16px' } as React.CSSProperties}>
-          <Block id="formula">
-            <p className="mono" style={{ padding: '10px 12px', background: 'var(--sunk)', borderRadius: 10 }}>{t('rules.formula.eq')}</p>
-            {p('rules.formula.p1')}
-            {p('rules.formula.p2')}
-            <p className="hand" style={{ fontSize: '1.3rem' }}>{t('rules.formula.example')}</p>
-          </Block>
-          <Block id="retake">
-            {p('rules.retake.p1')}
-            {p('rules.retake.p2')}
-          </Block>
-          <Block id="repeat">
-            {p('rules.repeat.p1')}
-            {p('rules.repeat.p2')}
-          </Block>
+        <div className="stack tight">
+          {RULES.map(([q, a], i) => (
+            <details key={q} className="card fold" open={i === 0}>
+              <summary><b>{q}</b></summary>
+              <div className="fold-body">{a.map((p) => <p key={p}>{p}</p>)}</div>
+            </details>
+          ))}
         </div>
       </div>
-
-      <div className="grid cols-3" style={{ alignItems: 'start' }}>
-        <Block id="pio">
-          {p('rules.pio.p')}
-          {p('rules.pio.i')}
-          {p('rules.pio.w')}
-          {p('rules.pio.remedial')}
-        </Block>
-        <Block id="probation">
-          {p('rules.probation.p1')}
-          {p('rules.probation.p2')}
-          {p('rules.probation.old')}
-        </Block>
-        <Block id="deans">
-          {p('rules.deans.p1')}
-          {p('rules.deans.p2')}
-        </Block>
-        <Block id="honours">
-          {p('rules.honours.p1')}
-          {p('rules.honours.p2')}
-        </Block>
-        <Block id="levels">
-          {p('rules.levels.p1')}
-          {p('rules.levels.p2')}
-        </Block>
-        <Block id="graduate">
-          {p('rules.graduate.p1')}
-          {p('rules.graduate.p2')}
-        </Block>
-      </div>
-
-      <p className="small muted">
-        {t('rules.source')}{' '}
-        <a href="https://www.bracu.ac.bd/academics/policies-and-procedures" target="_blank" rel="noreferrer">{t('rules.sourceLink')}</a>
-        {' · '}
-        <a href="https://www.bracu.ac.bd/academics/policies-and-procedures/academic-standings-and-honors" target="_blank" rel="noreferrer">{t('rules.sourceLink2')}</a>
+      <p className="muted small">
+        Source: BRAC University,{' '}
+        <a href="https://www.bracu.ac.bd/academics/policies-and-procedures" target="_blank" rel="noreferrer">Policies and Procedures</a> and{' '}
+        <a href="https://www.bracu.ac.bd/academics/policies-and-procedures/academic-standings-and-honors" target="_blank" rel="noreferrer">Academic Standings and Honors</a>, read September 2026.
       </p>
     </div>
   );
