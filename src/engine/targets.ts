@@ -70,6 +70,8 @@ export function planTarget(sums: Sums, remaining: number, target: number, pool: 
       }
     }
     for (const [high, low] of PAIRS) {
+      // if the lower grade on its own already gets there, the mix adds nothing
+      if (reaches(withCourses(sums, courses, courses.map(() => low)))) continue;
       for (let k = 1; k <= n; k++) {
         // the higher grades go on the full 3-credit courses first
         const grades = courses.map((_, i) => (i < k ? high : low));

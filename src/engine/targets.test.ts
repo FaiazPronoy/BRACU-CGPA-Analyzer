@@ -29,6 +29,8 @@ describe('planning a target', () => {
     expect(plan.mixes.length).toBeGreaterThan(0);
     for (const m of plan.mixes) {
       expect(m.cgpa).toBeGreaterThanOrEqual(3.65);
+      // a mix is only offered when its lower grade alone would fall short
+      if (m.lowCourses > 0) expect(withMix(sums, plan.courses, m.low, plan.courses.length, m.low)!).toBeLessThan(3.65);
       if (m.lowCourses > 0) {
         // one fewer at the higher grade must fall short, or it was not the smallest
         expect(withMix(sums, plan.courses, m.high, m.highCourses - 1, m.low)!).toBeLessThan(3.65);

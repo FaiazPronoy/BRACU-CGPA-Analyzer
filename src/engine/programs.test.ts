@@ -1,4 +1,5 @@
 import { describe, expect, it } from 'vitest';
+import { titleCase } from './gradesheet';
 import { detectProgram, PROGRAMS } from './programs';
 
 // the program line as the grade sheet prints it, for every undergraduate program
@@ -43,5 +44,14 @@ describe('finding the program on a grade sheet', () => {
       CSE: 136, CS: 124, EEE: 136, ECE: 136, APE: 130, PHY: 132, MAT: 127, MIC: 136, BIO: 136,
       PHR: 164, BBA: 130, ECO: 120, ANT: 130, ARC: 207, LLB: 135, AELS: 132, ENG: 120, BDM: 141,
     });
+  });
+});
+
+describe('course titles from the sheet', () => {
+  it('turns capitals back into a normal title', () => {
+    expect(titleCase('PROGRAMMING LANGUAGE-II')).toBe('Programming Language-II');
+    expect(titleCase('PRINCIPLES OF PHYSICS I')).toBe('Principles of Physics I');
+    expect(titleCase('VLSI DESIGN')).toBe('VLSI Design');
+    expect(titleCase('BUSINESS - BASICS, ETHICS AND ENVIRONMENT')).toBe('Business - Basics, Ethics and Environment');
   });
 });

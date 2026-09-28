@@ -40,11 +40,14 @@ const GRADE = /^(A\+|A-|A|B\+|B-|B|C\+|C-|C|D\+|D-|D|F|P|I|W)(\s*\((NT|RP|RT)\))
 // the sheet prints titles in capitals; turn them back into normal titles
 const SMALL = new Set(['of', 'and', 'the', 'for', 'to', 'in', 'a', 'an', 'on', 'with']);
 const KEEP_UPPER = /^(i|ii|iii|iv|v|vi|vlsi|ai|dbms|ui|ux|ict)$/;
+// each part of a hyphenated word on its own, so LANGUAGE-II becomes Language-II
+const word = (w: string, first: boolean) =>
+  KEEP_UPPER.test(w.replace(/[^a-z]/g, '')) ? w.toUpperCase() : !first && SMALL.has(w) ? w : w.charAt(0).toUpperCase() + w.slice(1);
 export const titleCase = (s: string) =>
   s
     .toLowerCase()
     .split(' ')
-    .map((w, i) => (KEEP_UPPER.test(w.replace(/[^a-z]/g, '')) ? w.toUpperCase() : i > 0 && SMALL.has(w) ? w : w.charAt(0).toUpperCase() + w.slice(1)))
+    .map((w, i) => w.split('-').map((part, j) => word(part, i === 0 || j > 0)).join('-'))
     .join(' ');
 
 let counter = 0;
