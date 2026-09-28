@@ -148,7 +148,9 @@ routes, so `dist/` works from anywhere:
 ## Made with
 
 React 18, TypeScript and Vite. pdf.js reads the grade sheet. The chart is
-hand-drawn SVG, with no chart library. Fonts: Sora, Manrope, DM Mono and Caveat.
+hand-drawn SVG, with no chart library. Fonts: Space Grotesk, IBM Plex Sans and
+Space Mono. The look is a pocket instrument: a graphite casing with an LCD for
+the CGPA, dark by default.
 
 ## Not official
 

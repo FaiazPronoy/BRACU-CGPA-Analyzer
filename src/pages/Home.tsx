@@ -22,8 +22,8 @@ function Landing() {
     <div className="landing">
       <section className="landing-hero">
         <div className="landing-copy">
-          <p className="eyebrow">For BRAC University students</p>
-          <h1>Know your CGPA, and how to <span className="pen-underline">raise&nbsp;it</span>.</h1>
+          <p className="eyebrow">Made for BRAC University grade sheets</p>
+          <h1>Know your CGPA, and how to <span className="accent">raise&nbsp;it</span>.</h1>
           <p className="lead">Upload the grade sheet from Connect. You get every semester at a glance, the repeats or retakes that lift your CGPA most, and what your target really takes.</p>
           <ol className="steps">
             <li><b>1</b><span>On Connect, open <em>Grade Sheet</em> and press <em>Download</em>.</span></li>
@@ -106,7 +106,7 @@ function Dashboard() {
       <section className="hero" aria-label="Your result">
         <div className="hero-main">
           <p className="hero-label">Your CGPA</p>
-          <p className="hero-cgpa">{two(cgpa)}<span>/ 4.00</span></p>
+          <p className="hero-cgpa"><span className="lcd"><span className="lcd-ghost" aria-hidden="true">8.88</span><span className="lcd-value">{two(cgpa)}</span></span><span className="hero-of">/ 4.00</span></p>
           <div className="hero-pills">
             {standing && <span className={`pill ${standing.status === 'good' ? 'good' : 'pen'}`}>{STANDING[standing.status]}</span>}
             <span className="pill soft">{LEVEL[levelOf(s.earned)]}</span>

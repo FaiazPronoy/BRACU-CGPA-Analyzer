@@ -20,7 +20,7 @@ function useWidth() {
 const short = (name: string) => `${name.slice(0, 3)} ${name.slice(-2)}`;
 
 // CGPA as a line over each semester's GPA as a bar, the 2.00 probation line,
-// and the biggest rise and fall marked in red pen
+// and the biggest rise and fall marked
 export default function Chart({ rows }: { rows: TermRow[] }) {
   const [box, width] = useWidth();
   const [active, setActive] = useState<number | null>(null);
@@ -47,7 +47,7 @@ export default function Chart({ rows }: { rows: TermRow[] }) {
     const cy = y(data[i].cgpa!);
     return (
       <g aria-hidden="true">
-        <ellipse cx={cx} cy={cy} rx={11} ry={9} fill="none" stroke={color} strokeWidth={1.8} transform={`rotate(-12 ${cx} ${cy})`} />
+        <circle cx={cx} cy={cy} r={10} fill="none" stroke={color} strokeWidth={1.8} />
         <text x={Math.min(Math.max(cx, PAD.left + 50), width - PAD.right - 50)} y={above ? Math.max(cy - 20, 16) : Math.min(cy + 32, H - PAD.bottom - 4)}
           textAnchor="middle" className="note" style={{ fill: color }}>{text}</text>
       </g>
@@ -67,11 +67,11 @@ export default function Chart({ rows }: { rows: TermRow[] }) {
         ))}
         {yMin < 2 && <line x1={PAD.left} x2={width - PAD.right} y1={y(2)} y2={y(2)} stroke="var(--pen)" strokeDasharray="5 5" opacity={0.7} />}
         {data.map((r, i) => r.gpa !== null && (
-          <rect key={r.semester} x={x(i) - barW / 2} y={y(r.gpa)} width={barW} height={Math.max(1, y(yMin) - y(r.gpa))} rx={6}
-            fill={active === i ? 'var(--navy)' : 'var(--bar)'} opacity={active === i ? 0.3 : 1} />
+          <rect key={r.semester} x={x(i) - barW / 2} y={y(r.gpa)} width={barW} height={Math.max(1, y(yMin) - y(r.gpa))} rx={2}
+            fill={active === i ? 'var(--data)' : 'var(--bar)'} opacity={active === i ? 0.3 : 1} />
         ))}
-        <path d={path} fill="none" stroke="var(--navy)" strokeWidth={3} strokeLinejoin="round" strokeLinecap="round" />
-        {data.map((r, i) => <circle key={r.semester} cx={x(i)} cy={y(r.cgpa!)} r={active === i ? 6.5 : 4.5} fill="var(--card)" stroke="var(--navy)" strokeWidth={2.5} />)}
+        <path d={path} fill="none" stroke="var(--data)" strokeWidth={3} strokeLinejoin="round" strokeLinecap="round" />
+        {data.map((r, i) => <circle key={r.semester} cx={x(i)} cy={y(r.cgpa!)} r={active === i ? 6.5 : 4.5} fill="var(--card)" stroke="var(--data)" strokeWidth={2.5} />)}
         {up.i > 0 && note(up.i, `${signed(up.c)} best jump`, 'var(--good)', true)}
         {down.i > 0 && note(down.i, `${signed(down.c)} biggest drop`, 'var(--pen)', false)}
         {data.map((r, i) => (i % every === 0 || i === data.length - 1) && (

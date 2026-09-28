@@ -62,35 +62,26 @@ export default function App() {
   const { valid } = useStore();
   const has = valid.length > 0;
 
-  return (
+  const brand = (
+    <a href="#/" className="brand" aria-label="BRACU CGPA Analyzer, home">
+      <span className="brand-lcd" aria-hidden="true">4.00</span>
+      <span className="brand-text">
+        <span className="brand-uni">BRACU</span>
+        <span className="brand-name">CGPA Analyzer</span>
+      </span>
+    </a>
+  );
+  const tools = (
+    <div className="bar-tools">
+      <a href="#/rules" className="tool-btn" aria-current={page === 'rules' ? 'page' : undefined}><Book /><span className="hide-sm">BRACU rules</span></a>
+      {has && <StartOver compact />}
+      <button type="button" className="tool-btn" onClick={toggleDark} aria-label={dark ? 'Switch to light mode' : 'Switch to dark mode'}>
+        {dark ? <Sun /> : <Moon />}<span className="hide-sm">{dark ? 'Light' : 'Dark'} theme</span>
+      </button>
+    </div>
+  );
+  const content = (
     <>
-      <a href="#main" className="skip" onClick={(e) => { e.preventDefault(); document.getElementById('main')?.focus(); }}>Skip to the calculator</a>
-      <header className="bar">
-        <div className="wrap bar-inner">
-          <a href="#/" className="brand" aria-label="BRACU CGPA Analyzer, home">
-            <img src="./favicon.svg" alt="" width={36} height={36} />
-            <span className="brand-text">
-              <span className="brand-uni">BRACU</span>
-              <span className="brand-name">CGPA Analyzer</span>
-            </span>
-          </a>
-          {has && (
-            <nav className="nav" aria-label="Sections">
-              {NAV.map((n) => (
-                <a key={n.page} href={n.page === 'home' ? '#/' : `#/${n.page}`} className="nav-link" aria-current={page === n.page ? 'page' : undefined}>
-                  {n.icon}<span>{n.label}</span>
-                </a>
-              ))}
-            </nav>
-          )}
-          <div className="bar-tools">
-            <a href="#/rules" className="tool-btn" aria-current={page === 'rules' ? 'page' : undefined}><Book /><span className="hide-sm">BRACU rules</span></a>
-            {has && <StartOver compact />}
-            <button type="button" className="tool-btn" onClick={toggleDark} aria-label={dark ? 'Switch to light mode' : 'Switch to dark mode'}>{dark ? <Sun /> : <Moon />}</button>
-          </div>
-        </div>
-      </header>
-
       <main id="main" tabIndex={-1} className="wrap main">
         {page === 'home' && <Home />}
         {page === 'repeat' && <Repeat />}
@@ -98,7 +89,6 @@ export default function App() {
         {page === 'courses' && <Courses />}
         {page === 'rules' && <Rules />}
       </main>
-
       <footer className="wrap foot">
         <p>Everything stays in this browser: no account, no server, nothing uploaded.</p>
         <p>
@@ -106,6 +96,37 @@ export default function App() {
           An independent student tool, not an official BRAC University service.
         </p>
       </footer>
+    </>
+  );
+
+  return (
+    <>
+      <a href="#main" className="skip" onClick={(e) => { e.preventDefault(); document.getElementById('main')?.focus(); }}>Skip to the calculator</a>
+      {has ? (
+        // with grades: a side panel with the four sections, numbered in the order people use them
+        <div className="shell">
+          <header className="side">
+            {brand}
+            <nav className="nav" aria-label="Sections">
+              <p className="nav-title">Sections</p>
+              {NAV.map((n, i) => (
+                <a key={n.page} href={n.page === 'home' ? '#/' : `#/${n.page}`} className="nav-link" aria-current={page === n.page ? 'page' : undefined}>
+                  <span className="nav-num" aria-hidden="true">0{i + 1}</span>{n.icon}<span>{n.label}</span>
+                </a>
+              ))}
+            </nav>
+            {tools}
+          </header>
+          <div>{content}</div>
+        </div>
+      ) : (
+        <>
+          <header className="bar">
+            <div className="wrap bar-inner">{brand}{tools}</div>
+          </header>
+          {content}
+        </>
+      )}
     </>
   );
 }
