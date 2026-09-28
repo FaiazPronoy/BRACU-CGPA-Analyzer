@@ -34,7 +34,7 @@ export default function LiveCgpa() {
           </button>
         </>
       ) : (
-        <p className="live-was">Change a grade below and watch this update.</p>
+        <p className="live-was">Change a grade above and watch this update.</p>
       )}
     </div>
   );
