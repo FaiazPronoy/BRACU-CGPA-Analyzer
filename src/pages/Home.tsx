@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { go } from '../App';
-import { Arrow, Calendar, Check, Printer, Rise, Target } from '../components/bits';
+import { Arrow, ArrowDown, Calendar, Check, Printer, Rise, Target } from '../components/bits';
 import Chart from '../components/Chart';
 import ImportSheet from '../components/ImportSheet';
 import QuickEstimate from '../components/QuickEstimate';
@@ -39,7 +39,7 @@ function Landing() {
             <button type="button" className="btn btn-quiet" onClick={() => { store.setAll(sampleTranscript(), null, 'CSE'); go('home'); }}>Try a sample student</button>
           </div>
           <button type="button" className="link-btn small quick-link" onClick={() => document.getElementById('quick')?.scrollIntoView({ behavior: 'smooth' })}>
-            Rather not upload anything? Use the quick estimate
+            Rather not upload anything? Use the quick estimate below <ArrowDown />
           </button>
         </div>
       </section>

@@ -22,6 +22,7 @@ export const Moon = icon(<><path d="M20 14.5A8 8 0 0 1 9.5 4a8 8 0 1 0 10.5 10.5
 export const Sun = icon(<><circle cx="12" cy="12" r="4" /><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4" /></>);
 export const Printer = icon(<><path d="M7 9V3h10v6" /><rect x="3" y="9" width="18" height="8" rx="2" /><path d="M7 14h10v7H7z" /></>);
 export const Arrow = icon(<><path d="M5 12h14M13 6l6 6-6 6" /></>);
+export const ArrowDown = icon(<><path d="M12 5v14M6 13l6 6 6-6" /></>);
 export const Gauge = icon(<><path d="M4 15a8 8 0 1 1 16 0" /><path d="m12 15 4-5" /></>);
 export const Rise = icon(<><path d="m3 17 6-6 4 4 8-8" /><path d="M15 7h6v6" /></>);
 export const Calendar = icon(<><rect x="3" y="5" width="18" height="16" rx="2" /><path d="M16 3v4M8 3v4M3 10h18" /></>);

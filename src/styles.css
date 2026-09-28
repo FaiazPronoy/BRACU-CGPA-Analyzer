@@ -1538,7 +1538,14 @@ table.plain .num {
   border-left: 3px solid var(--pen);
 }
 .quick-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
   justify-self: center;
+}
+.quick-link svg {
+  width: 16px;
+  height: 16px;
 }
 
 /* ------------------------------------------------------------ dialog */
