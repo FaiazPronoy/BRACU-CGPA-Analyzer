@@ -261,8 +261,8 @@ function Quick() {
 export default function Plan() {
   const { t } = useLang();
   const { totals: s, needed, valid, next } = useStore();
-  // biggest gains first; courses already at A- or better are left out
-  const pool = next ? candidates(valid, next, 'A').filter((c) => GRADE_POINTS[c.attempt.grade as LetterGrade] < 3.7) : [];
+  // biggest gains first; courses already at A or A+ have nothing to gain and are left out
+  const pool = next ? candidates(valid, next, 'A') : [];
   const byRules = pool.filter((c) => c.allowed === 'yes');
   const withPermission = pool.filter((c) => c.allowed !== 'no');
   const has = s.cgpa !== null;

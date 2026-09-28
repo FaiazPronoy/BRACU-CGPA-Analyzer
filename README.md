@@ -104,7 +104,10 @@ and `npm test` checks it too.
 
 ## Running it
 
-Needs Node 20 or later.
+Needs Node 20 or later. On Windows, double-click `RUN-Hisab.bat`: it installs
+the packages the first time, starts the site and opens it in your browser.
+
+By hand:
 
 ```bash
 npm install
