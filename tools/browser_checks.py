@@ -25,7 +25,7 @@ BASE = os.environ.get("HB_BASE", "http://localhost:5180/")
 CHANNEL = os.environ.get("HB_BROWSER", "msedge")
 HERE = os.path.dirname(os.path.abspath(__file__))
 SHEETS = sorted(glob.glob(os.path.join(HERE, "..", "fixtures", "private", "*.pdf")))
-PAGES = ["home", "raise", "plan", "courses", "rules"]
+PAGES = ["home", "repeat", "plan", "courses", "rules"]
 SHOTS = os.path.join(HERE, "shots")
 PASS, FAIL = [], []
 

@@ -1,8 +1,9 @@
 import { useState } from 'react';
 import { go } from '../App';
-import { Arrow, Calendar, Check, Circled, Printer, Rise, Target } from '../components/bits';
+import { Arrow, Calendar, Check, Printer, Rise, Target } from '../components/bits';
 import Chart from '../components/Chart';
 import ImportSheet from '../components/ImportSheet';
+import QuickEstimate from '../components/QuickEstimate';
 import { candidates, scenarios } from '../engine/boost';
 import { GRADE_POINTS, honourOf, LETTER_GRADES, LetterGrade, levelOf, projectedCgpa, projectedSplit, standingOf, TermRow } from '../engine/grades';
 import { PROGRAMS } from '../engine/programs';
@@ -22,8 +23,8 @@ function Landing() {
       <section className="landing-hero">
         <div className="landing-copy">
           <p className="eyebrow">For BRAC University students</p>
-          <h1>Your CGPA, worked out <span className="pen-underline">exactly</span> like your grade sheet.</h1>
-          <p className="lead">Upload the grade sheet from Connect and see every semester, which repeats or retakes would lift your CGPA most, and what it takes to reach your target.</p>
+          <h1>Know your CGPA, and how to <span className="pen-underline">raise&nbsp;it</span>.</h1>
+          <p className="lead">Upload the grade sheet from Connect. You get every semester at a glance, the repeats or retakes that lift your CGPA most, and what your target really takes.</p>
           <ol className="steps">
             <li><b>1</b><span>On Connect, open <em>Grade Sheet</em> and press <em>Download</em>.</span></li>
             <li><b>2</b><span>Drop the PDF here. It is read on your device.</span></li>
@@ -37,12 +38,18 @@ function Landing() {
             <button type="button" className="btn btn-line" onClick={() => go('courses')}>Type my grades in</button>
             <button type="button" className="btn btn-quiet" onClick={() => { store.setAll(sampleTranscript(), null, 'CSE'); go('home'); }}>Try a sample student</button>
           </div>
+          <button type="button" className="link-btn small quick-link" onClick={() => document.getElementById('quick')?.scrollIntoView({ behavior: 'smooth' })}>
+            Rather not upload anything? Use the quick estimate
+          </button>
         </div>
       </section>
+      <div id="quick">
+        <QuickEstimate intro="Rather not upload your grade sheet? Type the CGPA and credits shown on Connect, and see what next semester or a repeat would do." />
+      </div>
       <section className="features" aria-label="What Hisab does">
         {[
           ['See every semester', 'A graph of your CGPA, your best and toughest terms, and your VC\'s and Dean\'s Lists.'],
-          ['Know what to repeat', 'The retakes and repeats that lift your CGPA most, within BRACU\'s rules.'],
+          ['Know what to repeat', 'The repeats or retakes that lift your CGPA most, within BRACU\'s rules.'],
           ['Hit your target', 'Exactly what you need for 3.50 or any CGPA, or a clear answer if it cannot be done.'],
           ['Counted right', 'BRACU\'s rounding and retake rules, checked against real grade sheets.'],
         ].map(([h, p]) => (
@@ -99,7 +106,7 @@ function Dashboard() {
       <section className="hero" aria-label="Your result">
         <div className="hero-main">
           <p className="hero-label">Your CGPA</p>
-          <p className="hero-cgpa"><Circled>{two(cgpa)}</Circled></p>
+          <p className="hero-cgpa">{two(cgpa)}<span>/ 4.00</span></p>
           <div className="hero-pills">
             {standing && <span className={`pill ${standing.status === 'good' ? 'good' : 'pen'}`}>{STANDING[standing.status]}</span>}
             <span className="pill soft">{LEVEL[levelOf(s.earned)]}</span>
@@ -120,10 +127,10 @@ function Dashboard() {
       </section>
 
       <section className="actions" aria-label="What would you like to do?">
-        <a href="#/raise" className="action">
+        <a href="#/repeat" className="action">
           <span className="action-icon"><Rise /></span>
           <span className="action-text">
-            <b>Raise my CGPA</b>
+            <b>Repeat or retake</b>
             <span>{plan && plan.chosen.length ? `Best by the rules: ${two(plan.cgpa!)} with ${count(plan.chosen.length, 'repeat or retake', 'repeats or retakes')}.` : 'See which courses are worth taking again.'}</span>
           </span>
           <Arrow />
@@ -205,7 +212,7 @@ function Dashboard() {
             <ul className="outcomes">
               {[
                 ['Straight A (4.00)', projectedCgpa(s.sums, left, 4)],
-                [`Half 4.00, half at your average (${two(s.exact!)})`, projectedSplit(s.sums, left, 4, s.exact!)],
+                ['Half 4.00, half 3.70', projectedSplit(s.sums, left, 4, 3.7)],
                 ['All A- (3.70)', projectedCgpa(s.sums, left, 3.7)],
                 ['Same as your average so far', projectedCgpa(s.sums, left, s.exact!)],
               ].map(([label, v]) => {

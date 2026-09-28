@@ -33,16 +33,3 @@ export const Spark = icon(<><path d="M12 3v4M12 17v4M3 12h4M17 12h4" /><path d="
 export const Undo = icon(<><path d="M9 14 4 9l5-5" /><path d="M4 9h10a6 6 0 0 1 0 12h-3" /></>);
 
 // a loose, hand-drawn ring, the way a teacher circles a mark
-export function Circled({ children }: { children: ReactNode }) {
-  return (
-    <span className="circled">
-      {children}
-      <svg viewBox="0 0 100 50" preserveAspectRatio="none" aria-hidden="true">
-        <path d="M8 26 C6 10 40 4 62 6 C86 8 98 18 94 32 C90 46 50 48 28 45 C10 42 4 34 10 20 C14 12 24 9 34 8"
-          fill="none" stroke="var(--pen)" strokeWidth="2.4" strokeLinecap="round" vectorEffect="non-scaling-stroke" />
-      </svg>
-    </span>
-  );
-}
-
-export const gradeClass = (g: string) => `grade${g === 'F' ? ' f' : ''}`;

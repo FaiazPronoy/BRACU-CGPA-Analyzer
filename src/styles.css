@@ -82,6 +82,12 @@ h2 {
 h3 {
   font-size: 1.02rem;
 }
+p,
+li,
+summary,
+dd {
+  text-wrap: pretty;
+}
 p {
   margin: 0;
 }
@@ -211,7 +217,11 @@ svg {
   font-size: 1.3rem;
   letter-spacing: -0.03em;
 }
+.bar-inner:has(.nav) .brand-sub {
+  display: none;
+}
 .brand-sub {
+  white-space: nowrap;
   font-size: 0.78rem;
   font-weight: 600;
   color: var(--ink-2);
@@ -516,13 +526,6 @@ svg {
   font-family: var(--mono);
   font-weight: 500;
 }
-.grade {
-  font-family: var(--mono);
-  font-weight: 700;
-}
-.grade.f {
-  color: var(--pen);
-}
 .notice {
   display: flex;
   gap: 12px;
@@ -783,11 +786,20 @@ table.plain .num {
   color: rgb(255 255 255 / 0.75);
 }
 .hero-cgpa {
+  display: flex;
+  align-items: baseline;
+  gap: 10px;
   font-family: var(--mono);
   font-size: clamp(3.2rem, 9vw, 4.6rem);
+  font-weight: 500;
   line-height: 1.05;
-  margin: 8px 0 14px;
-  --pen: #ff8a97;
+  letter-spacing: -0.04em;
+  margin: 6px 0 16px;
+}
+.hero-cgpa span {
+  font-size: 1.1rem;
+  letter-spacing: 0;
+  color: rgb(255 255 255 / 0.6);
 }
 .hero-pills {
   display: flex;
@@ -871,19 +883,6 @@ table.plain .num {
 }
 .hero a {
   color: #fff;
-}
-.circled {
-  position: relative;
-  display: inline-block;
-  padding: 0 10px;
-}
-.circled svg {
-  position: absolute;
-  inset: -10px -8px;
-  width: calc(100% + 16px);
-  height: calc(100% + 20px);
-  pointer-events: none;
-  overflow: visible;
 }
 
 .actions {
@@ -1354,10 +1353,11 @@ table.plain .num {
   margin: 12px 0;
 }
 .inputs.three {
-  grid-template-columns: repeat(auto-fit, minmax(min(100%, 150px), 1fr));
+  grid-template-columns: repeat(3, minmax(0, 1fr));
 }
 .inputs label {
   display: grid;
+  align-content: start;
   gap: 6px;
   font-weight: 700;
   font-size: 0.88rem;
@@ -1368,6 +1368,7 @@ table.plain .num {
 }
 .sub-card {
   display: grid;
+  align-content: start;
   gap: 4px;
   padding: 16px;
   border-radius: 14px;
@@ -1386,6 +1387,12 @@ table.plain .num {
 }
 .card h3 {
   margin-top: 14px;
+}
+.sub-card h3 {
+  margin-top: 0;
+}
+.card > .two + .muted {
+  margin-top: 12px;
 }
 
 /* ------------------------------------------------------------ courses */
@@ -1501,6 +1508,37 @@ table.plain .num {
   .rules-grid {
     grid-template-columns: minmax(0, 1fr);
   }
+}
+
+/* checking it by hand */
+.by-hand {
+  display: grid;
+  gap: 10px;
+}
+.by-hand h3 {
+  margin-top: 12px;
+}
+.how {
+  display: grid;
+  gap: 8px;
+  margin: 0;
+  padding-left: 22px;
+}
+.how li::marker {
+  font-family: var(--mono);
+  color: var(--pen);
+}
+.yours,
+.example {
+  padding: 12px 14px;
+  border-radius: 12px;
+  background: var(--sunk);
+}
+.yours {
+  border-left: 3px solid var(--pen);
+}
+.quick-link {
+  justify-self: center;
 }
 
 /* ------------------------------------------------------------ dialog */

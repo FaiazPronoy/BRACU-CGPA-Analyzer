@@ -8,7 +8,7 @@ students actually ask:
 
 - Which courses should I repeat or retake to lift my CGPA the most?
 - What will my CGPA be at graduation if I get straight A grades from here? Or
-  A- in everything? Or 4.00 in half of what is left?
+  A- in everything? Or 4.00 in half of what is left and 3.70 in the rest?
 - How many times have I made the VC's List and the Dean's List?
 - Am I on track for Distinction?
 
@@ -20,7 +20,8 @@ grade sheet never leaves the device.
 Four pages, each named after the job it does:
 
 **1. My CGPA.** Upload the Connect grade sheet (PDF), try a sample student, or
-type semesters in by hand. After an upload, every semester's GPA, CGPA and
+type semesters in by hand. Rather not upload anything? The quick estimate on the
+first page works from just the CGPA and credits shown on Connect. After an upload, every semester's GPA, CGPA and
 credit totals are recomputed and compared with the sheet's own summary lines,
 and a dialog says whether they all match. The program (CSE, BBA, and so on) is
 read from the sheet as well. Then the dashboard:
@@ -29,14 +30,15 @@ read from the sheet as well. Then the dashboard:
 - a graph of the CGPA across semesters, each semester's GPA behind it, the
   probation line, and the biggest jump and drop marked (or the same as a table)
 - best and toughest semester, and how many of each grade
-- the CGPA at graduation if the remaining credits are all 4.00, half 4.00,
-  all 3.70, your average so far, or any grade you pick
+- the CGPA at graduation if the remaining credits are all 4.00, half 4.00 and
+  half 3.70, all 3.70, your average so far, or any grade you pick
 
-**2. Raise it.** One sentence to fill in: "I can take 3 courses again and
+**2. Repeat or retake.** One sentence to fill in: "I can take 3 courses again and
 expect an A in Summer 2026". Hisab picks the courses that lift the CGPA most,
 either only what you can register for (F retakes, and repeats still inside
 their 2 semester window) or older courses too, which need the Chairperson's
-permission. Each pick says whether it is allowed and until when. You can also
+permission. Each pick says whether it is allowed and until when, and a course that needs
+permission says how many semesters ago it was first taken. You can also
 tick courses yourself.
 
 **3. Plan ahead.** Try next semester's courses, see what a target CGPA needs
@@ -49,7 +51,9 @@ remove a course or a semester, upload a new grade sheet, or **Start over**,
 which clears everything after asking once. Start over is also in the top bar.
 
 **BRACU rules.** The grading scale and the policies behind every number, as
-questions a student would ask.
+questions a student would ask, and how to check your CGPA with a calculator:
+what to add, what to take out after a repeat or retake, and what to divide by.
+With a grade sheet loaded it shows your own sum.
 
 Light and dark, and it works on a phone.
 

@@ -1,3 +1,4 @@
+import ByHand from '../components/ByHand';
 import { GRADE_POINTS, LETTER_GRADES, MARKS } from '../engine/grades';
 
 const REMARK: Partial<Record<string, string>> = { 'A+': 'Exceptional', A: 'Excellent', B: 'Good', C: 'Fair', D: 'Poor', F: 'Failure' };
@@ -77,6 +78,7 @@ export default function Rules() {
           ))}
         </div>
       </div>
+      <ByHand />
       <p className="muted small">
         Source: BRAC University,{' '}
         <a href="https://www.bracu.ac.bd/academics/policies-and-procedures" target="_blank" rel="noreferrer">Policies and Procedures</a> and{' '}

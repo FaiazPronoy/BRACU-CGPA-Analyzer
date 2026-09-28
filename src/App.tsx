@@ -4,16 +4,16 @@ import StartOver from './components/StartOver';
 import Courses from './pages/Courses';
 import Home from './pages/Home';
 import Plan from './pages/Plan';
-import Raise from './pages/Raise';
+import Repeat from './pages/Repeat';
 import Rules from './pages/Rules';
 import { useStore } from './store';
 
-export const PAGES = ['home', 'raise', 'plan', 'courses', 'rules'] as const;
+export const PAGES = ['home', 'repeat', 'plan', 'courses', 'rules'] as const;
 export type Page = (typeof PAGES)[number];
 // the old addresses still work
-const OLD: Record<string, Page> = { overview: 'home', boost: 'raise', grades: 'courses' };
+const OLD: Record<string, Page> = { overview: 'home', boost: 'repeat', raise: 'repeat', grades: 'courses' };
 
-// plain hash routes (#/raise), so the built site works on any static host
+// plain hash routes (#/repeat), so the built site works on any static host
 function usePage(): Page {
   const read = (): Page => {
     const p = window.location.hash.replace(/^#\/?/, '');
@@ -51,7 +51,7 @@ function useDark() {
 // the four things people come to do, in the order they usually do them
 const NAV: { page: Page; label: string; icon: ReactNode }[] = [
   { page: 'home', label: 'My CGPA', icon: <Gauge /> },
-  { page: 'raise', label: 'Raise it', icon: <Rise /> },
+  { page: 'repeat', label: 'Repeat or retake', icon: <Rise /> },
   { page: 'plan', label: 'Plan ahead', icon: <Calendar /> },
   { page: 'courses', label: 'My courses', icon: <Rows /> },
 ];
@@ -91,7 +91,7 @@ export default function App() {
 
       <main id="main" tabIndex={-1} className="wrap main">
         {page === 'home' && <Home />}
-        {page === 'raise' && <Raise />}
+        {page === 'repeat' && <Repeat />}
         {page === 'plan' && <Plan />}
         {page === 'courses' && <Courses />}
         {page === 'rules' && <Rules />}

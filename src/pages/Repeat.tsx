@@ -7,13 +7,19 @@ import { useStore } from '../store';
 
 const HOPES: LetterGrade[] = ['A', 'A-', 'B+', 'B'];
 
-function status(c: Candidate) {
+// how far back a course was first taken, counted up to the semester being planned
+const since = (c: Candidate, next: string) => semesterIndex(next) - semesterIndex(c.firstSemester);
+
+function status(c: Candidate, next: string) {
   if (c.allowed === 'yes') return c.kind === 'retake' ? { tone: 'good', text: 'Retake (F)' } : { tone: 'good', text: `Repeat by ${c.lastChance}` };
-  if (c.allowed === 'permission') return { tone: 'warn', text: c.why === 'thirdRetake' ? 'Both retakes used: exception only' : "Chairperson's permission required" };
+  if (c.allowed === 'permission') {
+    if (c.why === 'thirdRetake') return { tone: 'warn', text: 'Both retakes used: exception only' };
+    return { tone: 'warn', text: `Chairperson's permission required (${since(c, next)} semesters ago)` };
+  }
   return { tone: 'pen', text: 'Already repeated once' };
 }
 
-export default function Raise() {
+export default function Repeat() {
   const store = useStore();
   const { valid, totals: s, next, latest } = store;
   const [n, setN] = useState(3);
@@ -33,7 +39,7 @@ export default function Raise() {
   if (s.cgpa === null || !next || !latest) {
     return (
       <div className="page-head">
-        <h1>Raise my CGPA</h1>
+        <h1>Repeat or retake</h1>
         <p className="lead">Add your grades first, then come back to see which courses are worth taking again.</p>
         <button type="button" className="btn btn-primary" onClick={() => go('home')}>Add my grades</button>
       </div>
@@ -51,8 +57,8 @@ export default function Raise() {
   return (
     <div className="stack">
       <div className="page-head">
-        <h1>Raise my CGPA</h1>
-        <p className="lead">Taking a course again replaces the old grade. Tell us how many you can manage, and we pick the ones that lift your CGPA most.</p>
+        <h1>Repeat or retake</h1>
+        <p className="lead">Taking a course again replaces the old grade. Say how many you can manage, and Hisab picks the ones that lift your CGPA the&nbsp;most.</p>
       </div>
 
       <section className="card controls" aria-label="Your plan">
@@ -94,11 +100,11 @@ export default function Raise() {
           <p className="muted small">from {two(s.cgpa)} now, with {count(plan.chosen.length, 'course')} at {hope}{plan.chosen.length < n ? ` (only ${plan.chosen.length} qualify)` : ''}.</p>
           <ul className="picks">
             {plan.chosen.map((c) => {
-              const st = status(c);
+              const st = status(c, next);
               return (
                 <li key={c.attempt.id}>
                   <span className="code">{c.attempt.code}</span>
-                  <span className="pick-title">{c.attempt.title || c.attempt.code}<em>{c.attempt.grade} to {hope}, {c.attempt.credits} credits</em></span>
+                  <span className="pick-title">{c.attempt.title || c.attempt.code}<em>{c.attempt.grade} to {hope}, {c.attempt.credits} credits, first taken {c.firstSemester}</em></span>
                   <span className={`pill ${st.tone}`}>{st.text}</span>
                 </li>
               );
@@ -116,7 +122,7 @@ export default function Raise() {
             <p className="muted small">Your pick: <b className="mono">{two(mine.cgpa ?? s.cgpa)}</b> with {count(chosen.length, 'course')}. The number on the right is your CGPA if only that course comes back.</p>
             <ul className="picks selectable">
               {pool.filter((c, i) => showAll || i < 8 || picked[c.attempt.id]).map((c) => {
-                const st = status(c);
+                const st = status(c, next);
                 const on = !!picked[c.attempt.id];
                 const alone = cgpaWithGains(s.sums, [gainFor(c.attempt, picked[c.attempt.id] ?? hope)]).cgpa!;
                 return (
