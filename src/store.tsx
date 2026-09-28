@@ -5,7 +5,9 @@ import { programByCode } from './engine/programs';
 
 // Everything a student types or uploads stays in this browser. There is no
 // server: nothing to leak, nothing to sign up for.
-const KEY = 'hisab:v1';
+const KEY = 'cgpa-analyzer:v1';
+// the site was called Hisab at first; grades saved under that name still load
+const OLD_KEY = 'hisab:v1';
 
 interface Saved {
   attempts: Attempt[];
@@ -20,7 +22,7 @@ const empty: Saved = { attempts: [], sheet: null, next: null, program: null, tot
 
 const load = (): Saved => {
   try {
-    const raw = JSON.parse(localStorage.getItem(KEY) || 'null');
+    const raw = JSON.parse(localStorage.getItem(KEY) || localStorage.getItem(OLD_KEY) || 'null');
     if (raw && Array.isArray(raw.attempts)) return { ...empty, ...raw };
   } catch {
     /* private mode or a broken value: start fresh */

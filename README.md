@@ -1,8 +1,8 @@
-# Hisab
+# CGPA Analyzer
 
 **The BRACU CGPA calculator that counts exactly the way your grade sheet does.**
 
-Upload the grade sheet from Connect and Hisab works out every semester again,
+Upload the grade sheet from Connect and CGPA Analyzer works out every semester again,
 checks each one against what the sheet prints, and then answers the questions
 students actually ask:
 
@@ -34,7 +34,7 @@ read from the sheet as well. Then the dashboard:
   half 3.70, all 3.70, your average so far, or any grade you pick
 
 **2. Repeat or Retake.** One sentence to fill in: "I will Repeat/Retake 3
-courses and expect an A in Summer 2026". Hisab picks the courses that lift the
+courses and expect an A in Summer 2026". CGPA Analyzer picks the courses that lift the
 CGPA most, either from the last 2 semesters plus any F, which you can take at
 advising, or older than 2 semesters too, which need the Chairperson's
 permission. Each pick says whether it is allowed and until when, and a course
@@ -112,7 +112,7 @@ and `npm test` checks it too.
 
 ## Running it
 
-Needs Node 20 or later. On Windows, double-click `RUN-Hisab.bat`: it installs
+Needs Node 20 or later. On Windows, double-click `RUN-CGPA-Analyzer.bat`: it installs
 the packages the first time, starts the site and opens it in your browser.
 
 By hand:
@@ -147,7 +147,7 @@ hand-drawn SVG, with no chart library. Fonts: Sora, Manrope, DM Mono and Caveat.
 
 ## Not official
 
-Hisab is an independent student tool, not a BRAC University service. It is as
+CGPA Analyzer is an independent student tool, not a BRAC University service. It is as
 accurate as the published rules and the tests above make it, but for anything
 that really matters (graduation, probation, a retake plan) confirm with your
 advisor.

@@ -1,9 +1,9 @@
 {
-  "name": "hisab",
+  "name": "cgpa-analyzer",
   "private": true,
   "version": "1.0.0",
   "type": "module",
-  "description": "Hisab: the BRACU CGPA calculator. Grade sheet import, repeat and retake analysis, all in the browser.",
+  "description": "CGPA Analyzer: the BRACU CGPA calculator. Grade sheet import, repeat and retake analysis, all in the browser.",
   "scripts": {
     "dev": "vite",
     "build": "tsc --noEmit && vite build",

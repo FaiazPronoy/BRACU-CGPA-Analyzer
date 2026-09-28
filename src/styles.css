@@ -1,4 +1,4 @@
-/* Hisab. Navy ink and a red pen, on a calm page. Colours are variables here;
+/* CGPA Analyzer. Navy ink and a red pen, on a calm page. Colours are variables here;
    dark mode is the second block. */
 
 :root {
@@ -206,7 +206,7 @@ svg {
 .bar-inner {
   display: flex;
   align-items: center;
-  gap: 18px;
+  gap: 12px;
   min-height: 66px;
 }
 .brand {
@@ -217,9 +217,10 @@ svg {
   text-decoration: none;
 }
 .brand-name {
+  white-space: nowrap;
   font-family: var(--display);
   font-weight: 800;
-  font-size: 1.3rem;
+  font-size: 1.2rem;
   letter-spacing: -0.03em;
 }
 .bar-inner:has(.nav) .brand-sub {
@@ -244,8 +245,8 @@ svg {
 .nav-link {
   display: inline-flex;
   align-items: center;
-  gap: 7px;
-  padding: 8px 15px;
+  gap: 6px;
+  padding: 8px 11px;
   border-radius: 999px;
   color: var(--ink-2);
   font-weight: 700;
@@ -278,7 +279,7 @@ svg {
   align-items: center;
   gap: 6px;
   min-height: 40px;
-  padding: 0 12px;
+  padding: 0 10px;
   border: 1px solid var(--line);
   border-radius: 12px;
   background: var(--card);
@@ -297,7 +298,7 @@ svg {
 .tool-btn[aria-current='page'] {
   border-color: var(--navy);
 }
-@media (max-width: 900px) {
+@media (max-width: 1240px) {
   .bar-inner {
     flex-wrap: wrap;
     gap: 8px 12px;

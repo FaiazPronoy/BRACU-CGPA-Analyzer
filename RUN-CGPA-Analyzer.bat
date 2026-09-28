@@ -1,9 +1,9 @@
 @echo off
-title Hisab - BRACU CGPA calculator
+title CGPA Analyzer - BRACU
 cd /d "%~dp0"
 
 echo ==========================================
-echo   HISAB  -  BRACU CGPA calculator
+echo   CGPA ANALYZER  -  BRAC University
 echo ==========================================
 echo.
 
@@ -24,7 +24,7 @@ if errorlevel 1 (
 )
 :ready
 
-echo [2/2] Starting Hisab at http://localhost:5180
+echo [2/2] Starting CGPA Analyzer at http://localhost:5180
 echo       Close this window to stop it.
 echo.
 rem open the browser a few seconds later, once the server is up

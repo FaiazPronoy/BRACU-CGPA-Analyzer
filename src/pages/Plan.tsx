@@ -140,8 +140,8 @@ export default function Plan() {
     // the dashboard's "Reach a target" card opens this page straight on the target
     let asked: string | null = null;
     try {
-      asked = sessionStorage.getItem('hisab:planTab');
-      sessionStorage.removeItem('hisab:planTab');
+      asked = sessionStorage.getItem('cgpa-analyzer:planTab');
+      sessionStorage.removeItem('cgpa-analyzer:planTab');
     } catch {
       /* fine */
     }

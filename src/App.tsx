@@ -40,7 +40,7 @@ function useDark() {
   useEffect(() => {
     document.documentElement.classList.toggle('dark', dark);
     try {
-      localStorage.setItem('hisab:theme', dark ? 'dark' : 'light');
+      localStorage.setItem('cgpa-analyzer:theme', dark ? 'dark' : 'light');
     } catch {
       /* fine */
     }
@@ -67,10 +67,10 @@ export default function App() {
       <a href="#main" className="skip" onClick={(e) => { e.preventDefault(); document.getElementById('main')?.focus(); }}>Skip to the calculator</a>
       <header className="bar">
         <div className="wrap bar-inner">
-          <a href="#/" className="brand" aria-label="Hisab, home">
+          <a href="#/" className="brand" aria-label="CGPA Analyzer, home">
             <img src="./favicon.svg" alt="" width={36} height={36} />
-            <span className="brand-name">Hisab</span>
-            <span className="brand-sub">BRACU CGPA calculator</span>
+            <span className="brand-name">CGPA Analyzer</span>
+            <span className="brand-sub">for BRAC University</span>
           </a>
           {has && (
             <nav className="nav" aria-label="Sections">

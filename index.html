@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Hisab | BRACU CGPA calculator</title>
+    <title>CGPA Analyzer | BRACU</title>
     <meta name="description" content="Work out your BRAC University CGPA exactly the way the grade sheet does. Upload your grade sheet from Connect, see which repeats and retakes lift your CGPA most, and plan your target. Nothing leaves your browser." />
     <meta name="theme-color" content="#16294d" />
     <link rel="icon" href="./favicon.svg" type="image/svg+xml" />
@@ -16,14 +16,14 @@
     <script>
       // the theme before the first paint, so nothing flashes
       try {
-        var t = localStorage.getItem('hisab:theme');
+        var t = localStorage.getItem('cgpa-analyzer:theme') || localStorage.getItem('hisab:theme');
         if (t === 'dark' || (!t && matchMedia('(prefers-color-scheme: dark)').matches)) document.documentElement.classList.add('dark');
       } catch (e) {}
     </script>
   </head>
   <body>
     <div id="root"></div>
-    <noscript>Hisab works out your CGPA in the browser, so it needs JavaScript turned on.</noscript>
+    <noscript>CGPA Analyzer works out your CGPA in the browser, so it needs JavaScript turned on.</noscript>
     <script type="module" src="/src/main.tsx"></script>
   </body>
 </html>

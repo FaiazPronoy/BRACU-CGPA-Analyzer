@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-Browser checks for Hisab, in a real browser through Playwright.
+Browser checks for CGPA Analyzer, in a real browser through Playwright.
 
   1. pages     every page, empty and with a transcript, loads without errors
   2. contrast  every piece of text against WCAG AA, light and dark
@@ -117,7 +117,7 @@ CONTRAST_JS = r"""
 
 def context(browser, theme, width=1366):
     ctx = browser.new_context(viewport={"width": width, "height": 900})
-    ctx.add_init_script("try { localStorage.setItem('hisab:theme', '%s') } catch (e) {}" % theme)
+    ctx.add_init_script("try { localStorage.setItem('cgpa-analyzer:theme', '%s') } catch (e) {}" % theme)
     return ctx
 
 
@@ -176,12 +176,12 @@ def main():
         page.goto(BASE + "#/home")
         page.get_by_role("button", name="Start over with a new grade sheet").click()
         page.get_by_role("button", name="Keep my grades").click()
-        kept = page.evaluate("(JSON.parse(localStorage.getItem('hisab:v1') || '{}').attempts || []).length")
+        kept = page.evaluate("(JSON.parse(localStorage.getItem('cgpa-analyzer:v1') || '{}').attempts || []).length")
         check("Keep my grades leaves the grades alone", kept > 0, kept)
         page.get_by_role("button", name="Start over with a new grade sheet").click()
         page.get_by_role("button", name="Yes, start over").click()
         page.wait_for_timeout(300)
-        left = page.evaluate("(JSON.parse(localStorage.getItem('hisab:v1') || '{}').attempts || []).length")
+        left = page.evaluate("(JSON.parse(localStorage.getItem('cgpa-analyzer:v1') || '{}').attempts || []).length")
         back = page.get_by_role("button", name="Try a sample student").is_visible()
         check("Start over clears every grade and goes back to the upload page", left == 0 and back, (left, back))
         ctx.close()
