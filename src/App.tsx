@@ -56,11 +56,26 @@ const NAV: { page: Page; label: string; icon: ReactNode }[] = [
   { page: 'courses', label: 'My courses', icon: <Rows /> },
 ];
 
+function useNumberKeys(on: boolean) {
+  useEffect(() => {
+    if (!on) return;
+    const press = (e: KeyboardEvent) => {
+      const t = e.target as HTMLElement;
+      if (e.ctrlKey || e.metaKey || e.altKey || t.closest('input, select, textarea, [contenteditable]')) return;
+      const n = Number(e.key);
+      if (n >= 1 && n <= NAV.length) go(NAV[n - 1].page);
+    };
+    window.addEventListener('keydown', press);
+    return () => window.removeEventListener('keydown', press);
+  }, [on]);
+}
+
 export default function App() {
   const page = usePage();
   const [dark, toggleDark] = useDark();
   const { valid } = useStore();
   const has = valid.length > 0;
+  useNumberKeys(has);
 
   const brand = (
     <a href="#/" className="brand" aria-label="BRACU CGPA Analyzer, home">
@@ -73,9 +88,9 @@ export default function App() {
   );
   const tools = (
     <div className="bar-tools">
-      <a href="#/rules" className="tool-btn" aria-current={page === 'rules' ? 'page' : undefined}><Book /><span className="hide-sm">BRACU rules</span></a>
+      <a href="#/rules" className="tool-btn" title="BRACU rules" aria-label="BRACU rules" aria-current={page === 'rules' ? 'page' : undefined}><Book /><span className="hide-sm">BRACU rules</span></a>
       {has && <StartOver compact />}
-      <button type="button" className="tool-btn" onClick={toggleDark} aria-label={dark ? 'Switch to light mode' : 'Switch to dark mode'}>
+      <button type="button" className="tool-btn" onClick={toggleDark} aria-label={dark ? 'Switch to light mode' : 'Switch to dark mode'} title={dark ? 'Light theme' : 'Dark theme'}>
         {dark ? <Sun /> : <Moon />}<span className="hide-sm">{dark ? 'Light' : 'Dark'} theme</span>
       </button>
     </div>
@@ -103,22 +118,24 @@ export default function App() {
     <>
       <a href="#main" className="skip" onClick={(e) => { e.preventDefault(); document.getElementById('main')?.focus(); }}>Skip to the calculator</a>
       {has ? (
-        // with grades: a side panel with the four sections, numbered in the order people use them
-        <div className="shell">
-          <header className="side">
-            {brand}
-            <nav className="nav" aria-label="Sections">
-              <p className="nav-title">Sections</p>
-              {NAV.map((n, i) => (
-                <a key={n.page} href={n.page === 'home' ? '#/' : `#/${n.page}`} className="nav-link" aria-current={page === n.page ? 'page' : undefined}>
-                  <span className="nav-num" aria-hidden="true">0{i + 1}</span>{n.icon}<span>{n.label}</span>
-                </a>
-              ))}
-            </nav>
-            {tools}
+        // with grades: the header is a row of keys, one per section
+        <>
+          <header className="deck">
+            <div className="wrap deck-inner">
+              {brand}
+              <nav className="keys" aria-label="Sections">
+                {NAV.map((n, i) => (
+                  <a key={n.page} href={n.page === 'home' ? '#/' : `#/${n.page}`} className="key" aria-current={page === n.page ? 'page' : undefined}
+                    aria-keyshortcuts={String(i + 1)}>
+                    <span className="key-num" aria-hidden="true">{i + 1}</span>{n.icon}<span>{n.label}</span>
+                  </a>
+                ))}
+              </nav>
+              {tools}
+            </div>
           </header>
-          <div>{content}</div>
-        </div>
+          {content}
+        </>
       ) : (
         <>
           <header className="bar">

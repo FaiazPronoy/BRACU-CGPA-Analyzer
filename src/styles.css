@@ -295,125 +295,117 @@ svg {
   border-color: var(--data);
 }
 
-.shell {
-  display: grid;
-  grid-template-columns: 250px minmax(0, 1fr);
-  min-height: 100vh;
-}
-.side {
+/* with grades loaded, the header becomes the top of the instrument: a graphite
+   strip with the four sections as keys, numbered 1 to 4 (the number keys on the
+   keyboard work too) */
+.deck {
   position: sticky;
   top: 0;
   z-index: 20;
+  background: var(--casing);
+  border-bottom: 1px solid var(--casing-edge);
+  box-shadow: 0 8px 20px -14px rgb(0 0 0 / 0.6);
+}
+.deck-inner {
   display: flex;
-  flex-direction: column;
-  gap: 26px;
-  height: 100vh;
-  padding: 22px 16px;
-  border-right: 1px solid var(--line);
-  background: var(--card);
+  align-items: center;
+  gap: 14px;
+  min-height: 72px;
 }
-.nav {
+.deck .brand {
+  color: #eceef2;
+}
+.deck .brand-uni {
+  color: #f5b63d;
+}
+.keys {
+  display: flex;
+  gap: 8px;
+  margin: 0 auto;
+}
+.key {
+  position: relative;
   display: grid;
-  gap: 2px;
-}
-.nav-title {
-  margin: 0 0 6px 12px;
-  font-family: var(--mono);
-  font-size: 0.7rem;
-  letter-spacing: 0.16em;
-  text-transform: uppercase;
-  color: var(--ink-2);
-}
-.nav-link {
-  display: grid;
-  grid-template-columns: 24px 20px minmax(0, 1fr);
+  grid-template-columns: auto auto;
   align-items: center;
   gap: 8px;
-  padding: 10px 12px;
+  padding: 9px 14px 11px;
+  border: 1px solid #0b0d10;
   border-radius: 8px;
-  color: var(--ink-2);
+  color: #d9dde5;
   font-weight: 600;
+  font-size: 0.92rem;
   text-decoration: none;
+  white-space: nowrap;
+  background: linear-gradient(180deg, #353a45, #262a32);
+  box-shadow: inset 0 1px 0 rgb(255 255 255 / 0.1), 0 3px 0 #0b0d10;
+  transition: transform 0.08s, box-shadow 0.08s;
 }
-.nav-link svg {
-  width: 18px;
-  height: 18px;
+.key svg {
+  width: 17px;
+  height: 17px;
 }
-.nav-num {
+.key-num {
+  position: absolute;
+  top: 3px;
+  right: 6px;
   font-family: var(--mono);
-  font-size: 0.72rem;
+  font-size: 0.6rem;
+  color: rgb(217 221 229 / 0.55);
 }
-.nav-link:hover {
-  color: var(--ink);
-  background: var(--sunk);
+.key:hover {
+  color: #fff;
 }
-.nav-link[aria-current='page'] {
-  background: var(--sunk);
-  color: var(--ink);
-  box-shadow: inset 3px 0 0 var(--data);
+/* the section you are in is a key held down, with its light on */
+.key[aria-current='page'] {
+  transform: translateY(3px);
+  color: #1a1300;
+  background: linear-gradient(180deg, #ffcb5c, #f5b63d);
+  box-shadow: inset 0 1px 0 rgb(255 255 255 / 0.35), 0 0 0 #0b0d10, 0 0 16px -2px rgb(245 182 61 / 0.55);
 }
-.nav-link[aria-current='page'] .nav-num {
-  color: var(--data);
+.key[aria-current='page'] .key-num {
+  color: rgb(26 19 0 / 0.6);
 }
-.side .bar-tools {
-  display: grid;
-  margin: auto 0 0;
+/* on the strip the tools are small keys with their names as tooltips */
+.deck .tool-btn .hide-sm {
+  display: none;
 }
-.side .tool-btn {
-  justify-content: flex-start;
+.deck .tool-btn {
+  border-color: #0b0d10;
+  background: #262a32;
+  color: #d9dde5;
 }
-.side .tool-btn .hide-sm {
-  display: inline;
+.deck .tool-btn:hover,
+.deck .tool-btn[aria-current='page'] {
+  border-color: #f5b63d;
+  color: #fff;
 }
-@media (max-width: 1099px) {
-  .shell {
-    display: block;
+@media (max-width: 1180px) {
+  .deck-inner {
+    flex-wrap: wrap;
+    gap: 10px 12px;
+    padding-top: 10px;
+    padding-bottom: 12px;
   }
-  /* on smaller screens the side panel folds into a bar across the top */
-  .side {
-    height: auto;
-    flex-flow: row wrap;
-    align-items: center;
-    gap: 8px 12px;
-    padding: 10px 16px;
-    border-right: 0;
-    border-bottom: 1px solid var(--line);
-    background: color-mix(in srgb, var(--bg) 92%, transparent);
-    backdrop-filter: blur(10px);
+  .deck .bar-tools {
+    margin-left: auto;
   }
-  .side .bar-tools {
-    display: flex;
-    margin: 0 0 0 auto;
-  }
-  .side .tool-btn .hide-sm {
-    display: none;
-  }
-  .nav {
+  .keys {
     order: 3;
     width: 100%;
+    display: grid;
     grid-template-columns: repeat(4, minmax(0, 1fr));
-    padding: 4px;
-    border-radius: 10px;
-    background: var(--sunk);
+    margin: 0;
   }
-  .nav-title {
-    display: none;
-  }
-  .nav-link {
+  .key {
     grid-template-columns: 1fr;
     justify-items: center;
-    gap: 2px;
-    padding: 7px 4px;
+    gap: 3px;
+    padding: 8px 4px 9px;
     font-size: 0.76rem;
     line-height: 1.2;
     text-align: center;
-  }
-  .nav-num {
-    display: none;
-  }
-  .nav-link[aria-current='page'] {
-    background: var(--card);
-    box-shadow: inset 0 -2px 0 var(--data);
+    white-space: normal;
   }
 }
 

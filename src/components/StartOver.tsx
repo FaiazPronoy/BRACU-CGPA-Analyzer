@@ -10,7 +10,7 @@ export default function StartOver({ compact = false }: { compact?: boolean }) {
   const [open, setOpen] = useState(false);
   return (
     <>
-      <button type="button" className={compact ? 'tool-btn' : 'btn btn-quiet danger'} onClick={() => setOpen(true)} aria-label={compact ? 'Start over with a new grade sheet' : undefined}>
+      <button type="button" className={compact ? 'tool-btn' : 'btn btn-quiet danger'} onClick={() => setOpen(true)} aria-label={compact ? 'Start over with a new grade sheet' : undefined} title={compact ? 'Start over' : undefined}>
         <Restart /> {compact ? <span className="hide-sm">Start over</span> : 'Start over'}
       </button>
       <Dialog open={open} onClose={() => setOpen(false)} title="Start over?">
