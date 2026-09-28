@@ -80,17 +80,17 @@ export default function Repeat() {
         </p>
         <div className="toggle" role="radiogroup" aria-label="Which courses">
           <button type="button" role="radio" aria-checked={!wide} onClick={() => setWide(false)}>
-            <b>Only what I can register for</b><span>F retakes, and repeats within 2 semesters</span>
+            <b>Courses within 2 semesters</b><span>F retakes and recent courses. You can take these at advising.</span>
           </button>
           <button type="button" role="radio" aria-checked={wide} onClick={() => setWide(true)}>
-            <b>Include older courses</b><span>These need your Chairperson's permission</span>
+            <b>Include older courses</b><span>Taken earlier. These need your Chairperson's permission.</span>
           </button>
         </div>
       </section>
 
       {pool.length === 0 ? (
         <section className="card result empty-result">
-          <h2>{all.length ? 'Nothing you can register for right now' : 'Nothing to gain here'}</h2>
+          <h2>{all.length ? 'Nothing you can take at advising right now' : 'Nothing to gain here'}</h2>
           <p className="muted">{all.length ? 'Every course that would help is past its 2 semester window. Switch on "Include older courses" to see them.' : `Every counted grade is already ${hope} or better.`}</p>
         </section>
       ) : (

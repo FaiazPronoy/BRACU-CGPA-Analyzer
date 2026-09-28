@@ -35,8 +35,8 @@ read from the sheet as well. Then the dashboard:
 
 **2. Repeat or retake.** One sentence to fill in: "I can take 3 courses again and
 expect an A in Summer 2026". Hisab picks the courses that lift the CGPA most,
-either only what you can register for (F retakes, and repeats still inside
-their 2 semester window) or older courses too, which need the Chairperson's
+either only courses within 2 semesters, which you can take at advising (F
+retakes, and repeats still inside their 2 semester window), or older courses too, which need the Chairperson's
 permission. Each pick says whether it is allowed and until when, and a course that needs
 permission says how many semesters ago it was first taken. You can also
 tick courses yourself.
