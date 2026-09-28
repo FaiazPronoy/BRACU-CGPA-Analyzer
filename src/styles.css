@@ -188,6 +188,11 @@ svg {
     display: none;
   }
 }
+@media (min-width: 641px) {
+  .show-sm {
+    display: none;
+  }
+}
 
 /* ------------------------------------------------------------ top bar */
 .bar {
@@ -311,10 +316,14 @@ svg {
   }
   .nav-link {
     flex-direction: column;
+    justify-content: center;
     gap: 2px;
     padding: 7px 4px;
     border-radius: 12px;
     font-size: 0.76rem;
+    line-height: 1.2;
+    text-align: center;
+    white-space: normal;
   }
   .nav + .bar-tools {
     margin-left: auto;
@@ -1502,6 +1511,81 @@ table.plain .num {
     grid-column: 1 / -1;
     order: 1;
   }
+}
+
+/* the CGPA pinned to the bottom while courses are edited */
+.live {
+  position: sticky;
+  bottom: 14px;
+  z-index: 10;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 10px 20px;
+  padding: 12px 18px;
+  border-radius: 16px;
+  background: var(--navy);
+  color: var(--on-navy);
+  box-shadow: 0 16px 36px -14px rgb(12 26 54 / 0.6);
+}
+.live-now {
+  display: flex;
+  align-items: baseline;
+  gap: 10px;
+  font-weight: 700;
+}
+.live-number {
+  font-family: var(--mono);
+  font-size: 1.9rem;
+  line-height: 1.1;
+  padding: 0 6px;
+  border-radius: 8px;
+  animation: live-flash 0.9s ease-out;
+}
+@keyframes live-flash {
+  from {
+    background: color-mix(in srgb, var(--on-navy) 28%, transparent);
+  }
+  to {
+    background: transparent;
+  }
+}
+.live-was {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex: 1 1 200px;
+  opacity: 0.9;
+}
+.live .btn-line {
+  background: transparent;
+  color: var(--on-navy);
+  border-color: color-mix(in srgb, var(--on-navy) 40%, transparent);
+}
+@media (max-width: 640px) {
+  .live {
+    bottom: 8px;
+    gap: 6px 12px;
+    padding: 10px 14px;
+  }
+  .live-now span {
+    font-size: 0.85rem;
+  }
+  .live-number {
+    font-size: 1.5rem;
+  }
+  .live-was {
+    flex: 1 1 auto;
+    font-size: 0.85rem;
+  }
+}
+.live .pill.good {
+  background: #d9f7e6;
+  color: #0b6b43;
+}
+.live .pill.pen {
+  background: #fde2e6;
+  color: #a10f28;
 }
 
 /* ------------------------------------------------------------ rules */

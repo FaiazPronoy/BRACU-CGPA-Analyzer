@@ -2,6 +2,7 @@ import { useMemo, useState } from 'react';
 import { Check, Plus, Trash, Upload as UploadIcon } from '../components/bits';
 import Dialog from '../components/Dialog';
 import ImportSheet from '../components/ImportSheet';
+import LiveCgpa from '../components/LiveCgpa';
 import StartOver from '../components/StartOver';
 import { ALL_GRADES, Attempt, Grade, gpaOf, nextSemester, semesterIndex, semesterSums, TERMS } from '../engine/grades';
 import { newId } from '../engine/gradesheet';
@@ -110,6 +111,8 @@ export default function Courses() {
           </details>
         );
       })}
+
+      {s.cgpa !== null && <LiveCgpa />}
 
       <Dialog open={uploading} onClose={() => setUploading(false)} title={attempts.length ? 'Upload a new grade sheet' : 'Upload your grade sheet'} wide>
         {attempts.length > 0 && <p className="muted small">The new sheet replaces the courses you have here now.</p>}
