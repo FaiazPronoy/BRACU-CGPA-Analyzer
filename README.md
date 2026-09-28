@@ -17,7 +17,8 @@ grade sheet never leaves the device.
 
 ## What is in it
 
-Four pages, each named after the job it does:
+Four pages, each named after the job it does. Once grades are loaded they sit
+as keys along the top, and the number keys 1 to 4 jump between them:
 
 **1. My CGPA.** Upload the Connect grade sheet (PDF), try a sample student, or
 type semesters in by hand. Rather not upload anything? The quick estimate on the
