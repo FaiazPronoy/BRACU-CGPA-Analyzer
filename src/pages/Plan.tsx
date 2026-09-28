@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { go } from '../App';
 import { Plus, Trash } from '../components/bits';
 import QuickEstimate from '../components/QuickEstimate';
+import WhatIf from '../components/WhatIf';
 import { Candidate, candidates } from '../engine/boost';
 import { add, gpaOf, GRADE_POINTS, LETTER_GRADES, LetterGrade, neededGpa, Sums } from '../engine/grades';
 import { planTarget } from '../engine/targets';
@@ -131,7 +132,7 @@ function Target({ sums, earned, needed, byRules, withPermission }: { sums: Sums;
   );
 }
 
-type Tool = 'next' | 'target' | 'quick';
+type Tool = 'next' | 'target' | 'whatif' | 'quick';
 
 export default function Plan() {
   const { totals: s, needed, valid, next } = useStore();
@@ -155,17 +156,18 @@ export default function Plan() {
     <div className="stack">
       <div className="page-head">
         <h1>Plan ahead</h1>
-        <p className="lead">{has ? 'Try next semester before it happens, find what a target CGPA needs, or run a quick estimate.' : 'No grades here yet: the quick estimate works with just your CGPA and credits.'}</p>
+        <p className="lead">{has ? 'Try next semester before it happens, find what a target CGPA needs, play with what ifs, or run a quick estimate.' : 'No grades here yet: the quick estimate works with just your CGPA and credits.'}</p>
       </div>
       {has && (
         <div className="segmented" role="tablist" aria-label="Planning tools">
-          {([['next', 'Next semester'], ['target', 'Reach a target'], ['quick', 'Quick estimate']] as [Tool, string][]).map(([k, l]) => (
+          {([['next', 'Next semester'], ['target', 'Reach a target'], ['whatif', 'What if'], ['quick', 'Quick estimate']] as [Tool, string][]).map(([k, l]) => (
             <button key={k} type="button" role="tab" aria-selected={shown === k} onClick={() => setTool(k)}>{l}</button>
           ))}
         </div>
       )}
       {shown === 'next' && <NextSemester sums={s.sums} />}
       {shown === 'target' && <Target sums={s.sums} earned={s.earned} needed={needed} byRules={pool.filter((c) => c.allowed === 'yes')} withPermission={pool.filter((c) => c.allowed !== 'no')} />}
+      {shown === 'whatif' && <WhatIf />}
       {shown === 'quick' && <QuickEstimate />}
     </div>
   );

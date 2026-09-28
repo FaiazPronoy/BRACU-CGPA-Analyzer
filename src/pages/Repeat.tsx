@@ -94,6 +94,19 @@ export default function Repeat() {
         </div>
       </section>
 
+      <div className="compare" aria-label="The three ways, side by side">
+        {([['rules', 'Last 2 semesters'], ['permission', "With the Chairperson's permission"], ['retakes', 'F grades only']] as const).map(([k, label]) => {
+          const p = plans[k];
+          return (
+            <div key={k} className={`compare-card${(k === 'rules' && !wide) || (k === 'permission' && wide) ? ' on' : ''}`}>
+              <span>{label}</span>
+              <b className="mono">{p.chosen.length ? two(p.cgpa!) : 'n/a'}</b>
+              <em>{!p.chosen.length ? 'nothing qualifies' : p.chosen.length === 1 ? 'with the best course' : `with the best ${p.chosen.length} courses`}</em>
+            </div>
+          );
+        })}
+      </div>
+
       {pool.length === 0 ? (
         <section className="card result empty-result">
           <h2>{all.length ? 'Nothing you can take at advising right now' : 'Nothing to gain here'}</h2>

@@ -29,7 +29,8 @@ read from the sheet as well. Then the dashboard:
   and VC's List and Dean's List counts
 - a graph of the CGPA across semesters, each semester's GPA behind it, the
   probation line, and the biggest jump and drop marked (or the same as a table)
-- best and toughest semester, and how many of each grade
+- best and toughest semester, how many of each grade, and where straight A's
+  from here would finish
 - the CGPA at graduation if the remaining credits are all 4.00, half 4.00 and
   half 3.70, all 3.70, your average so far, or any grade you pick
 
@@ -38,17 +39,21 @@ courses and expect an A in Summer 2026". The Analyzer picks the courses that lif
 CGPA most, either from the last 2 semesters plus any F, which you can take at
 advising, or older than 2 semesters too, which need the Chairperson's
 permission. Each pick says whether it is allowed and until when, and a course
-that needs permission says how many semesters ago it was first taken. You can also
-tick courses yourself.
+that needs permission says how many semesters ago it was first taken. The three
+ways (last 2 semesters, with the Chairperson's permission, F grades only) sit
+side by side, and you can also tick courses yourself.
 
 **3. Plan ahead.** Try next semester's courses, see what a target CGPA needs
 (with mixes like "10 courses at A and 7 at A-", and which repeats would make an
-impossible target possible), or get a quick estimate from just a CGPA and
-credits.
+impossible target possible), play with a **What if** (change any grade below A,
+leave a course out, or add future courses, without touching your real grades),
+or get a quick estimate from just a CGPA and credits.
 
 **4. My courses.** Every semester, folded away until you open it. Edit, add or
 remove a course or a semester, upload a new grade sheet, or **Start over**,
 which clears everything after asking once. Start over is also in the top bar.
+While you edit, a bar pinned to the bottom shows the CGPA, what it was, and an
+undo button.
 
 **BRACU rules.** The grading scale and the policies behind every number, as
 questions a student would ask, and how to check your CGPA with a calculator:
