@@ -16,7 +16,7 @@
     <script>
       // the theme before the first paint, so nothing flashes
       try {
-        var t = localStorage.getItem('cgpa-analyzer:theme') || localStorage.getItem('hisab:theme');
+        var t = localStorage.getItem('cgpa-analyzer:theme');
         // dark unless someone picked light: the instrument look is at home there
         if (t !== 'light') document.documentElement.classList.add('dark');
       } catch (e) {}
