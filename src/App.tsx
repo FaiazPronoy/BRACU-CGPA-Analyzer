@@ -1,4 +1,4 @@
-import { ReactNode, useEffect, useState } from 'react';
+import React, { ReactNode, useEffect, useState } from 'react';
 import { Book, Calendar, Gauge, Moon, Rise, Rows, Sun } from './components/bits';
 import StartOver from './components/StartOver';
 import Courses from './pages/Courses';
@@ -79,7 +79,20 @@ export default function App() {
 
   const brand = (
     <a href="#/" className="brand" aria-label="BRACU CGPA Analyzer, home">
-      <span className="brand-lcd" aria-hidden="true">4.00</span>
+      {/* a ring most of the way round, like the CGPA on the dashboard */}
+      <span className="brand-mark" aria-hidden="true">
+        <svg viewBox="0 0 36 36">
+          <defs>
+            <linearGradient id="brand-grad" x1="0" y1="0" x2="1" y2="1">
+              <stop offset="0" stopColor="var(--grad-a)" />
+              <stop offset="1" stopColor="var(--grad-b)" />
+            </linearGradient>
+          </defs>
+          <circle cx="18" cy="18" r="13" fill="none" stroke="var(--sunk)" strokeWidth="5" />
+          <circle cx="18" cy="18" r="13" fill="none" stroke="url(#brand-grad)" strokeWidth="5" strokeLinecap="round"
+            strokeDasharray="81.7" strokeDashoffset="14" transform="rotate(-90 18 18)" />
+        </svg>
+      </span>
       <span className="brand-text">
         <span className="brand-uni">BRACU</span>
         <span className="brand-name">CGPA Analyzer</span>
@@ -123,11 +136,11 @@ export default function App() {
           <header className="deck">
             <div className="wrap deck-inner">
               {brand}
-              <nav className="keys" aria-label="Sections">
+              <nav className="keys" aria-label="Sections" style={{ '--at': Math.max(0, NAV.findIndex((n) => n.page === page)) } as React.CSSProperties}>
                 {NAV.map((n, i) => (
                   <a key={n.page} href={n.page === 'home' ? '#/' : `#/${n.page}`} className="key" aria-current={page === n.page ? 'page' : undefined}
                     aria-keyshortcuts={String(i + 1)}>
-                    <span className="key-num" aria-hidden="true">{i + 1}</span>{n.icon}<span>{n.label}</span>
+                    {n.icon}<span>{n.label}</span>
                   </a>
                 ))}
               </nav>

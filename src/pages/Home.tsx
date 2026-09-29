@@ -84,6 +84,25 @@ function Highlights({ rows }: { rows: TermRow[] }) {
   );
 }
 
+// the CGPA as a ring filling towards 4.00
+function Ring({ value }: { value: number }) {
+  const r = 46;
+  const round = 2 * Math.PI * r;
+  return (
+    <svg className="ring" viewBox="0 0 100 100" aria-hidden="true">
+      <defs>
+        <linearGradient id="ring-grad" x1="0" y1="0" x2="1" y2="1">
+          <stop offset="0" stopColor="var(--grad-a)" />
+          <stop offset="1" stopColor="var(--grad-b)" />
+        </linearGradient>
+      </defs>
+      <circle className="ring-track" cx="50" cy="50" r={r} fill="none" strokeWidth="7" />
+      <circle className="ring-fill" cx="50" cy="50" r={r} fill="none" stroke="url(#ring-grad)" strokeWidth="7" strokeLinecap="round"
+        strokeDasharray={round} strokeDashoffset={round * (1 - Math.min(1, value / 4))} />
+    </svg>
+  );
+}
+
 function Dashboard() {
   const store = useStore();
   const { totals: s, rows, valid, next, programInfo, needed } = store;
@@ -105,22 +124,27 @@ function Dashboard() {
     <div className="stack">
       <section className="hero" aria-label="Your result">
         <div className="hero-main">
-          <p className="hero-label">Your CGPA</p>
-          <p className="hero-cgpa"><span className="lcd"><span className="lcd-ghost" aria-hidden="true">8.88</span><span className="lcd-value">{two(cgpa)}</span></span><span className="hero-of">/ 4.00</span></p>
-          <div className="hero-pills">
-            {standing && <span className={`pill ${standing.status === 'good' ? 'good' : 'pen'}`}>{STANDING[standing.status]}</span>}
-            <span className="pill soft">{LEVEL[levelOf(s.earned)]}</span>
-            {honour && <span className="pill soft">{HONOUR[honour]}</span>}
+          <Ring value={cgpa} />
+          <div className="hero-center">
+            <p className="hero-label">CGPA</p>
+            <p className="hero-cgpa">{two(cgpa)}</p>
+            <p className="hero-of">out of 4.00</p>
           </div>
         </div>
         <div className="hero-side">
-          <div>
-            <div className="hero-row"><span>Credits</span><b>{s.earned}{needed ? ` of ${needed}` : ''}</b></div>
-            {pct !== null && <div className="progress" role="progressbar" aria-valuemin={0} aria-valuemax={needed!} aria-valuenow={s.earned} aria-label="Credits earned"><span style={{ width: `${pct}%` }} /></div>}
+          <div className="hero-pills">
+            {standing && <span className={`pill ${standing.status === 'good' ? 'good' : 'pen'}`}>{STANDING[standing.status]}</span>}
+            <span className="pill">{LEVEL[levelOf(s.earned)]}</span>
+            {honour && <span className="pill navy">{HONOUR[honour]}</span>}
           </div>
-          <div className="hero-lists">
-            <div><b>{vc.length}</b><span>VC's List</span></div>
-            <div><b>{dean.length}</b><span>Dean's List</span></div>
+          <div className="hero-stats">
+            <div>
+              <span>Credits</span>
+              <b>{s.earned}{needed ? <small> / {needed}</small> : null}</b>
+              {pct !== null && <div className="progress" role="progressbar" aria-valuemin={0} aria-valuemax={needed!} aria-valuenow={s.earned} aria-label="Credits earned"><span style={{ width: `${pct}%` }} /></div>}
+            </div>
+            <div><span>VC's List</span><b>{vc.length}</b></div>
+            <div><span>Dean's List</span><b>{dean.length}</b></div>
           </div>
           {allA !== null && left! > 0 && <p className="hero-note">Straight A's from here would finish at <b>{two(allA)}</b>.</p>}
         </div>
@@ -179,8 +203,14 @@ function Dashboard() {
         <Highlights rows={rows} />
         <section className="card" aria-labelledby="gr">
           <h2 id="gr">Your grades</h2>
-          <ul className="grade-counts">
-            {counts.map(([g, n]) => <li key={g}><span>{g}</span><b>{n}</b></li>)}
+          <ul className="grade-counts" aria-label="How many of each grade">
+            {counts.map(([g, n]) => (
+              <li key={g} className={['D+', 'D', 'D-', 'F'].includes(g) ? 'low' : undefined} aria-label={`${g}: ${n}`}>
+                <b aria-hidden="true">{n}</b>
+                <i style={{ height: `calc((100% - 44px) * ${(n / Math.max(...counts.map((c) => c[1]))).toFixed(3)})` }} />
+                <span aria-hidden="true">{g}</span>
+              </li>
+            ))}
           </ul>
           {vc.length + dean.length > 0 ? (
             <p className="muted small" style={{ marginTop: 12 }}>

@@ -67,11 +67,22 @@ export default function Chart({ rows }: { rows: TermRow[] }) {
         ))}
         {yMin < 2 && <line x1={PAD.left} x2={width - PAD.right} y1={y(2)} y2={y(2)} stroke="var(--pen)" strokeDasharray="5 5" opacity={0.7} />}
         {data.map((r, i) => r.gpa !== null && (
-          <rect key={r.semester} x={x(i) - barW / 2} y={y(r.gpa)} width={barW} height={Math.max(1, y(yMin) - y(r.gpa))} rx={2}
-            fill={active === i ? 'var(--data)' : 'var(--bar)'} opacity={active === i ? 0.3 : 1} />
+          <rect key={r.semester} x={x(i) - barW / 2} y={y(r.gpa)} width={barW} height={Math.max(1, y(yMin) - y(r.gpa))} rx={6}
+            fill={active === i ? 'var(--grad-a)' : 'var(--bar)'} opacity={active === i ? 0.35 : 0.8} />
         ))}
-        <path d={path} fill="none" stroke="var(--data)" strokeWidth={3} strokeLinejoin="round" strokeLinecap="round" />
-        {data.map((r, i) => <circle key={r.semester} cx={x(i)} cy={y(r.cgpa!)} r={active === i ? 6.5 : 4.5} fill="var(--card)" stroke="var(--data)" strokeWidth={2.5} />)}
+        <defs>
+          <linearGradient id="line-grad" x1="0" y1="0" x2="1" y2="0">
+            <stop offset="0" stopColor="var(--grad-a)" />
+            <stop offset="1" stopColor="var(--grad-b)" />
+          </linearGradient>
+          <linearGradient id="area-grad" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0" stopColor="var(--grad-b)" stopOpacity={0.16} />
+            <stop offset="1" stopColor="var(--grad-b)" stopOpacity={0} />
+          </linearGradient>
+        </defs>
+        <path d={`${path} L${x(data.length - 1).toFixed(1)},${y(yMin).toFixed(1)} L${x(0).toFixed(1)},${y(yMin).toFixed(1)} Z`} fill="url(#area-grad)" />
+        <path d={path} fill="none" stroke="url(#line-grad)" strokeWidth={3} strokeLinejoin="round" strokeLinecap="round" />
+        {data.map((r, i) => <circle key={r.semester} cx={x(i)} cy={y(r.cgpa!)} r={active === i ? 6.5 : 4.5} fill="var(--card)" stroke="var(--grad-b)" strokeWidth={2.5} />)}
         {up.i > 0 && note(up.i, `${signed(up.c)} best jump`, 'var(--good)', true)}
         {down.i > 0 && note(down.i, `${signed(down.c)} biggest drop`, 'var(--pen)', false)}
         {data.map((r, i) => (i % every === 0 || i === data.length - 1) && (

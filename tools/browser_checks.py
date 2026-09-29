@@ -55,7 +55,9 @@ CONTRAST_JS = r"""
     let stack = [];
     for (let e = el; e; e = e.parentElement) {
       const cs = getComputedStyle(e);
-      if (cs.backgroundImage.includes('gradient')) {
+      // gradient text paints its letters, not what is behind them
+      const clipped = (cs.backgroundClip || cs.webkitBackgroundClip) === 'text';
+      if (cs.backgroundImage.includes('gradient') && !clipped) {
         const stops = [...cs.backgroundImage.matchAll(/rgba?\([^)]+\)/g)].map(m => parse(m[0])).filter(s => s.a > 0);
         if (stops.length) {
           const solid = stops.filter(s => s.a >= 1), glass = stops.filter(s => s.a < 1);
@@ -96,17 +98,23 @@ CONTRAST_JS = r"""
     if (cs.visibility === 'hidden' || cs.display === 'none' || box.width === 0 || box.height === 0) continue;
     if (el.closest('[aria-hidden="true"], .sr-only, [hidden], option, script, style, iframe, .ql-editor .ql-blank')) continue;
     if (el.closest('button:disabled, input:disabled, [aria-disabled="true"], .ant-select-disabled')) continue;
-    const fg = parse(cs.color);
-    if (!fg) continue;
+    // gradient text is only as readable as its palest end, so each stop is a colour to test
+    const textClip = (cs.backgroundClip || cs.webkitBackgroundClip) === 'text' && cs.backgroundImage.includes('gradient');
+    const fgs = textClip
+      ? [...cs.backgroundImage.matchAll(/rgba?\([^)]+\)/g)].map(m => parse(m[0])).filter(Boolean)
+      : [parse(cs.color)].filter(Boolean);
+    if (!fgs.length) continue;
     const size = parseFloat(cs.fontSize), weight = parseInt(cs.fontWeight, 10);
     const need = (size >= 24 || (size >= 18.66 && weight >= 700)) ? 3 : 4.5;
-    for (const bg of backgrounds(el)) {
-      const r = ratio(fg.a < 1 ? over(fg, bg) : fg, bg);
-      checked++;
-      if (r < need) {
-        bad.push({text: text.slice(0, 40), ratio: Math.round(r * 100) / 100, need,
-                  cls: (el.className && el.className.baseVal === undefined ? el.className : '') || el.tagName});
-        break;
+    check: for (const fg of fgs) {
+      for (const bg of backgrounds(el)) {
+        const r = ratio(fg.a < 1 ? over(fg, bg) : fg, bg);
+        checked++;
+        if (r < need) {
+          bad.push({text: text.slice(0, 40), ratio: Math.round(r * 100) / 100, need,
+                    cls: (el.className && el.className.baseVal === undefined ? el.className : '') || el.tagName});
+          break check;
+        }
       }
     }
   }

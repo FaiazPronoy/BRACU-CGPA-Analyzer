@@ -18,7 +18,7 @@ grade sheet never leaves the device.
 ## What is in it
 
 Four pages, each named after the job it does. Once grades are loaded they sit
-as keys along the top, and the number keys 1 to 4 jump between them:
+in a switch along the top, and the number keys 1 to 4 jump between them:
 
 **1. My CGPA.** Upload the Connect grade sheet (PDF), try a sample student, or
 type semesters in by hand. Rather not upload anything? The quick estimate on the
@@ -149,9 +149,11 @@ routes, so `dist/` works from anywhere:
 ## Made with
 
 React 18, TypeScript and Vite. pdf.js reads the grade sheet. The chart is
-hand-drawn SVG, with no chart library. Fonts: Space Grotesk, IBM Plex Sans and
-Space Mono. The look is a pocket instrument: a graphite casing with an LCD for
-the CGPA, dark by default.
+hand-drawn SVG, with no chart library. Fonts: Sora for the numbers and
+headings, Manrope for everything else. The look is meant to stay calm: a soft
+mist page, white cards without hard borders, and one aqua to indigo gradient
+kept for what matters, like the ring that fills towards 4.00. It follows the
+device's light or dark setting until you pick one.
 
 ## Not official
 

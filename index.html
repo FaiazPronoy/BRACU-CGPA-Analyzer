@@ -5,20 +5,21 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>BRACU CGPA Analyzer</title>
     <meta name="description" content="An accurate CGPA calculator for BRACU: upload your grade sheet, see your CGPA, plan how to raise it." />
-    <meta name="theme-color" content="#1b1e24" />
+    <meta name="theme-color" content="#f3f5fa" media="(prefers-color-scheme: light)" />
+    <meta name="theme-color" content="#0a0f1c" media="(prefers-color-scheme: dark)" />
     <link rel="icon" href="./favicon.svg" type="image/svg+xml" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-      href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@500;700&family=Space+Mono:wght@400;700&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Sora:wght@400;500;600&display=swap"
       rel="stylesheet"
     />
     <script>
       // the theme before the first paint, so nothing flashes
       try {
         var t = localStorage.getItem('cgpa-analyzer:theme');
-        // dark unless someone picked light: the instrument look is at home there
-        if (t !== 'light') document.documentElement.classList.add('dark');
+        // what was picked last time, or else what the device prefers
+        if (t === 'dark' || (!t && matchMedia('(prefers-color-scheme: dark)').matches)) document.documentElement.classList.add('dark');
       } catch (e) {}
     </script>
   </head>
