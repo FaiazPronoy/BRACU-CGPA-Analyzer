@@ -56,9 +56,17 @@ export default function Repeat() {
 
   return (
     <div className="stack">
-      <div className="page-head">
-        <h1>Repeat or Retake</h1>
-        <p className="lead">Taking a course again replaces the old grade. Say how many you can manage, and the Analyzer picks the ones that lift your CGPA the&nbsp;most.</p>
+      <div className="page-head page-head-split">
+        <div className="page-head">
+          <h1>Repeat or Retake</h1>
+          <p className="lead">Taking a course again replaces the old grade. Say how many you can manage, and the Analyzer picks the ones that lift your CGPA the&nbsp;most.</p>
+        </div>
+        {/* the starting point, so every number below reads against it */}
+        <div className="now-card" aria-label="Your CGPA now">
+          <span>Your CGPA now</span>
+          <b className="mono">{two(s.cgpa)}</b>
+          <small>{s.earned} credits earned</small>
+        </div>
       </div>
 
       <section className="card controls" aria-label="Your plan">

@@ -438,6 +438,45 @@ svg {
   gap: 8px;
   justify-items: start;
 }
+/* a heading with the current CGPA pinned beside it */
+.page-head-split {
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: end;
+  gap: 16px 24px;
+  justify-items: stretch;
+}
+.now-card {
+  display: grid;
+  gap: 2px;
+  min-width: 170px;
+  padding: 14px 20px;
+  border-radius: var(--radius);
+  background: var(--card);
+  box-shadow: var(--shadow);
+  border-top: 4px solid var(--grad-b);
+}
+.now-card span {
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: var(--ink-2);
+}
+.now-card b {
+  font-size: 2.2rem;
+  line-height: 1.05;
+  color: var(--ink);
+}
+.now-card small {
+  font-size: 0.8rem;
+  color: var(--ink-2);
+}
+@media (max-width: 640px) {
+  .page-head-split {
+    grid-template-columns: 1fr;
+  }
+  .now-card {
+    justify-self: start;
+  }
+}
 .lead {
   max-width: 60ch;
   color: var(--ink-2);
