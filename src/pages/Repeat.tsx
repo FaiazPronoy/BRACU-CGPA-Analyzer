@@ -6,17 +6,19 @@ import { count, signedValue, two } from '../format';
 import { useStore } from '../store';
 
 const HOPES: LetterGrade[] = ['A', 'A-', 'B+', 'B'];
+// "an A", "a B+": the grade the way it is said in a sentence
+const said = (g: LetterGrade) => (g.startsWith('A') ? `an ${g}` : `a ${g}`);
 
 // how far back a course was first taken, counted up to the semester being planned
 const since = (c: Candidate, next: string) => semesterIndex(next) - semesterIndex(c.firstSemester);
 
 function status(c: Candidate, next: string) {
-  if (c.allowed === 'yes') return c.kind === 'retake' ? { tone: 'good', text: 'Retake (F)' } : { tone: 'good', text: `Repeat by ${c.lastChance}` };
+  if (c.allowed === 'yes') return c.kind === 'retake' ? { tone: 'good', text: 'Retake: you got an F' } : { tone: 'good', text: `Repeat, allowed until ${c.lastChance}` };
   if (c.allowed === 'permission') {
-    if (c.why === 'thirdRetake') return { tone: 'warn', text: 'Both retakes used: exception only' };
-    return { tone: 'warn', text: `Chairperson's permission required (${since(c, next)} semesters ago)` };
+    if (c.why === 'thirdRetake') return { tone: 'warn', text: 'Both retakes used, needs an exception' };
+    return { tone: 'warn', text: `Needs Chairperson's permission (taken ${since(c, next)} semesters ago)` };
   }
-  return { tone: 'pen', text: 'Already repeated once' };
+  return { tone: 'pen', text: 'Already repeated once, cannot repeat again' };
 }
 
 export default function Repeat() {
@@ -59,7 +61,11 @@ export default function Repeat() {
       <div className="page-head page-head-split">
         <div className="page-head">
           <h1>Repeat or Retake</h1>
-          <p className="lead">Taking a course again replaces the old grade. Say how many you can manage, and the Analyzer picks the ones that lift your CGPA the&nbsp;most.</p>
+          <p className="lead">Tell us how many courses you want to take again, and we will pick the ones that raise your CGPA the&nbsp;most.</p>
+          <p className="muted small explain">
+            <b>Repeat</b> means taking a course you passed again, to get a better grade. <b>Retake</b> means taking a course you
+            failed (F) again. Either way, the new grade takes the place of the old one in your&nbsp;CGPA.
+          </p>
         </div>
         {/* the starting point, so every number below reads against it */}
         <div className="now-card" aria-label="Your CGPA now">
@@ -82,7 +88,7 @@ export default function Repeat() {
           <span className="phrase">
             <span>{n === 1 ? 'course' : 'courses'} and expect</span>
             <select className="field inline mono" aria-label="Grade you expect" value={hope} onChange={(e) => setHope(e.target.value as LetterGrade)}>
-              {HOPES.map((g) => <option key={g} value={g}>{g === 'A' ? 'an A' : g === 'A-' ? 'an A-' : `a ${g}`}</option>)}
+              {HOPES.map((g) => <option key={g} value={g}>{said(g)}</option>)}
             </select>
           </span>
           <span className="phrase">
@@ -94,22 +100,26 @@ export default function Repeat() {
         </p>
         <div className="toggle" role="radiogroup" aria-label="Which courses">
           <button type="button" role="radio" aria-checked={!wide} onClick={() => setWide(false)}>
-            <b>Last 2 semesters</b><span>Courses from your last 2 semesters, plus any F. You can take these at advising.</span>
+            <b>Courses from my last 2 semesters</b><span>Courses you took in your last 2 semesters, plus any course you got an F in. You can take these at advising without asking anyone.</span>
           </button>
           <button type="button" role="radio" aria-checked={wide} onClick={() => setWide(true)}>
-            <b>Older than 2 semesters</b><span>Adds courses taken more than 2 semesters ago. These need your Chairperson's permission.</span>
+            <b>Also older courses</b><span>Also counts courses you took more than 2 semesters ago. For these you need your Chairperson's permission.</span>
           </button>
         </div>
       </section>
 
       <div className="compare" aria-label="The three ways, side by side">
-        {([['rules', 'Last 2 semesters'], ['permission', "With the Chairperson's permission"], ['retakes', 'F grades only']] as const).map(([k, label]) => {
+        {([['rules', 'From your last 2 semesters'], ['permission', "Older courses too, with your Chairperson's permission"], ['retakes', 'Only the courses you failed (F)']] as const).map(([k, label]) => {
           const p = plans[k];
+          const m = p.chosen.length;
+          const say = !m ? 'No course fits here, so your CGPA stays the same'
+            : k === 'retakes' ? `Retake ${m === 1 ? 'this 1 failed course' : `these ${m} failed courses`} and your CGPA becomes`
+            : `Repeat/Retake your best ${m === 1 ? 'course' : `${m} courses`} and your CGPA becomes`;
           return (
             <div key={k} className={`compare-card${(k === 'rules' && !wide) || (k === 'permission' && wide) ? ' on' : ''}`}>
               <span>{label}</span>
-              <b className="mono">{p.chosen.length ? two(p.cgpa!) : 'n/a'}</b>
-              <em>{!p.chosen.length ? 'nothing qualifies' : p.chosen.length === 1 ? 'with the best course' : `with the best ${p.chosen.length} courses`}</em>
+              <em>{say}</em>
+              <b className="mono">{two(m ? p.cgpa! : s.cgpa!)}</b>
             </div>
           );
         })}
@@ -118,13 +128,19 @@ export default function Repeat() {
       {pool.length === 0 ? (
         <section className="card result empty-result">
           <h2>{all.length ? 'Nothing you can take at advising right now' : 'Nothing to gain here'}</h2>
-          <p className="muted">{all.length ? 'Every course that would help is past its 2 semester window. Switch on "Include older courses" to see them.' : `Every counted grade is already ${hope} or better.`}</p>
+          <p className="muted">{all.length ? 'Every course that would help was taken more than 2 semesters ago. Choose "Also older courses" above to see them.' : `Every counted grade is already ${hope} or better.`}</p>
         </section>
       ) : (
         <section className="card result" aria-labelledby="result">
-          <p className="result-label" id="result">Your CGPA could become</p>
+          <p className="result-label" id="result">
+            {plan.chosen.length === 1 ? `If you Repeat/Retake this 1 course and get ${said(hope)}, your CGPA becomes`
+              : `If you Repeat/Retake these ${plan.chosen.length} courses and get ${said(hope)} in each, your CGPA becomes`}
+          </p>
           <p className="result-number">{two(plan.cgpa!)} <span className="pill good">{signedValue(gain)}</span></p>
-          <p className="muted small">from {two(s.cgpa)} now, with {count(plan.chosen.length, 'course')} at {hope}{plan.chosen.length < n ? ` (only ${plan.chosen.length} qualify)` : ''}.</p>
+          <p className="muted small">Your CGPA is {two(s.cgpa)} now.</p>
+          {plan.chosen.length < n && (
+            <p className="small warn-text">You asked for {n} courses, but only {plan.chosen.length} {plan.chosen.length === 1 ? 'fits' : 'fit'} here{plan.chosen.length > 1 ? `, so these are the ${plan.chosen.length}` : ''}.</p>
+          )}
           <ul className="picks">
             {plan.chosen.map((c) => {
               const st = status(c, next);
@@ -137,16 +153,20 @@ export default function Repeat() {
               );
             })}
           </ul>
-          {plan.steps.length > 1 && <p className="muted small">One at a time: {plan.steps.map((st) => `${st.count} course${st.count > 1 ? 's' : ''} ${two(st.cgpa!)}`).join(', ')}.</p>}
+          {plan.steps.length > 1 && <p className="muted small">If you take fewer: {plan.steps.map((st) => `${count(st.count, 'course')}: ${two(st.cgpa!)}`).join(' · ')}</p>}
           {credits > 15 && <p className="small warn-text">That is {credits} credits, more than one semester (15) holds, so spread them over two.</p>}
         </section>
       )}
 
       {pool.length > 0 && (
         <details className="card fold">
-          <summary><b>Choose courses yourself</b><span>Tick the ones you are thinking about and see your CGPA change.</span></summary>
+          <summary><b>Or pick the courses yourself</b><span>Tick the ones you are thinking about and watch your CGPA change.</span></summary>
           <div className="fold-body">
-            <p className="muted small">Your pick: <b className="mono">{two(mine.cgpa ?? s.cgpa)}</b> with {count(chosen.length, 'course')}. The number on the right is your CGPA if only that course comes back.</p>
+            <p className="muted small">
+              {chosen.length ? <>With the {count(chosen.length, 'course')} you ticked, your CGPA becomes <b className="mono">{two(mine.cgpa!)}</b>.</>
+                : <>Nothing ticked yet. Your CGPA now is <b className="mono">{two(s.cgpa)}</b>.</>}{' '}
+              The small number on the right is your CGPA if you take only that one course again.
+            </p>
             <ul className="picks selectable">
               {pool.filter((c, i) => showAll || i < 8 || picked[c.attempt.id]).map((c) => {
                 const st = status(c, next);
