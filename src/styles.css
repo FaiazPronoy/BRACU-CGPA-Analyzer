@@ -1,40 +1,40 @@
-/* BRACU CGPA Analyzer. Bright and clear: a butter yellow page, warm white
-   cards that float rather than sit in boxes, and one sunflower to tangerine
-   gradient that marks the numbers that matter. Colours are variables here;
-   the dark theme is the second block. */
+/* BRACU CGPA Analyzer. Bold and clear: a blush white page lit with red and
+   blue, white cards that float rather than sit in boxes, and one hot red
+   gradient for the numbers that matter. Blue is the second voice: links,
+   the semester bars, the buttons you press. Colours are variables here; the
+   dark theme is the second block. */
 
-/* the light theme is a sunny page: butter ground, warm white cards, and one
-   sunflower to tangerine gradient for the numbers that matter */
 :root {
-  --bg: #FFF4DC;
-  --card: #FFFDF8;
-  --sunk: #FFF0D2;
-  --line: #F2E1BD;
-  --line-2: #DCC393;
-  --ink: #1F1608;
-  --ink-2: #6A5634;
-  --navy: #1F1608;
-  --navy-2: #3A2A10;
-  --on-navy: #FFF7E6;
-  --data: #A34700;
-  --data-lo: #FFE8C2;
-  --grad-a: #FFB21E;
-  --grad-b: #F2541B;
-  /* the same gradient, deep enough to be read as text on the butter page */
-  --text-a: #B45309;
-  --text-b: #C2410C;
-  --pen: #C42B45;
-  --pen-lo: #FDE8EC;
+  --bg: #FFF4F5;
+  --card: #FFFFFF;
+  --sunk: #FFEEF0;
+  --line: #F5DADF;
+  --line-2: #E5B4BE;
+  --ink: #15142A;
+  --ink-2: #5A5068;
+  /* the dark blue that anchors the red: primary buttons and the logo tile */
+  --navy: #0F1C4D;
+  --navy-2: #1E3280;
+  --on-navy: #FFFFFF;
+  --data: #1E4FD8;
+  --data-lo: #E3EAFF;
+  --grad-a: #FF3355;
+  --grad-b: #D0102E;
+  /* red into blue, deep enough to be read as text on the blush page */
+  --text-a: #D0102E;
+  --text-b: #1E4FD8;
+  --pen: #B3123A;
+  --pen-lo: #FDE6EB;
   --good: #0A7A52;
   --good-lo: #DFF5EA;
   --warn: #8A5200;
   --warn-lo: #FFF1DB;
-  --bar: #F5E4C2;
-  --glow: rgb(255 190 50 / 0.42);
-  --glow-2: rgb(255 125 80 / 0.24);
-  --glow-3: rgb(140 220 150 / 0.22);
-  --shadow: 0 1px 2px rgb(60 36 0 / 0.05), 0 14px 34px -20px rgb(120 70 0 / 0.3);
-  --shadow-lift: 0 2px 4px rgb(60 36 0 / 0.06), 0 22px 44px -22px rgb(120 70 0 / 0.38);
+  --bar: #DCE5FF;
+  --glow: rgb(255 51 85 / 0.2);
+  --glow-2: rgb(40 90 255 / 0.16);
+  --glow-3: rgb(150 70 255 / 0.1);
+  --shadow: 0 1px 2px rgb(40 10 30 / 0.05), 0 14px 34px -20px rgb(120 10 40 / 0.28);
+  --shadow-lift: 0 2px 4px rgb(40 10 30 / 0.06), 0 22px 44px -22px rgb(120 10 40 / 0.36);
   --radius: 20px;
   --radius-sm: 12px;
   --display: 'Sora', system-ui, sans-serif;
@@ -43,30 +43,32 @@
 }
 
 .dark {
-  --bg: #120D06;
-  --card: #1C150B;
-  --sunk: #261D0F;
-  --line: #372A15;
-  --line-2: #4D3C1F;
-  --ink: #FBF1DE;
-  --ink-2: #C9B48F;
-  --navy: #FBF1DE;
+  --bg: #0C0A16;
+  --card: #151223;
+  --sunk: #1E1930;
+  --line: #2C2544;
+  --line-2: #42395F;
+  --ink: #F5EFF7;
+  --ink-2: #BCB1CC;
+  --navy: #F5EFF7;
   --navy-2: #FFFFFF;
-  --on-navy: #120D06;
-  --data: #FFC24D;
-  --text-a: #FFC24D;
-  --text-b: #FF8A5B;
-  --data-lo: #33240C;
+  --on-navy: #0C0A16;
+  --data: #86A6FF;
+  --text-a: #FF6680;
+  --text-b: #86A6FF;
+  --data-lo: #1A2448;
+  --grad-a: #FF4766;
+  --grad-b: #E0163A;
   --pen: #FF8497;
   --pen-lo: #3A1621;
   --good: #4FDCA3;
   --good-lo: #0F2E22;
   --warn: #F5C56D;
   --warn-lo: #33260F;
-  --bar: #33271A;
-  --glow: rgb(255 178 30 / 0.12);
-  --glow-2: rgb(242 84 27 / 0.1);
-  --glow-3: rgb(80 200 120 / 0.06);
+  --bar: #25264A;
+  --glow: rgb(255 51 85 / 0.12);
+  --glow-2: rgb(60 110 255 / 0.12);
+  --glow-3: rgb(150 70 255 / 0.06);
   --shadow: 0 1px 2px rgb(0 0 0 / 0.3), 0 16px 36px -20px rgb(0 0 0 / 0.8);
   --shadow-lift: 0 2px 4px rgb(0 0 0 / 0.3), 0 24px 48px -22px rgb(0 0 0 / 0.9);
   color-scheme: dark;
@@ -646,7 +648,7 @@ svg {
 }
 /* white on the light end of the gradient is too faint, so this one runs deep in both themes */
 .pill.navy {
-  background: linear-gradient(135deg, #B45309, #C2410C);
+  background: linear-gradient(135deg, #D0102E, #1E4FD8);
   color: #fff;
 }
 .code {
@@ -856,7 +858,7 @@ table.plain .num {
   height: 60px;
   border-radius: 18px;
   background: linear-gradient(135deg, var(--grad-a), var(--grad-b));
-  color: #2A1500;
+  color: #fff;
   box-shadow: 0 12px 24px -12px var(--grad-b);
 }
 .drop-icon svg {
@@ -1071,7 +1073,7 @@ table.plain .num {
   flex-shrink: 0;
   border-radius: 14px;
   background: linear-gradient(135deg, var(--grad-a), var(--grad-b));
-  color: #2A1500;
+  color: #fff;
 }
 .action-icon svg {
   width: 20px;
