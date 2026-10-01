@@ -123,6 +123,7 @@ export default function App() {
           Rules from <a href="https://www.bracu.ac.bd/academics/policies-and-procedures" target="_blank" rel="noreferrer">bracu.ac.bd</a> (read September 2026), checked against real grade sheets.
           An independent student tool, not an official BRAC University service.
         </p>
+        <p>Made by Faiaz Abrar Zaman Pronoy and Sinthia Khandoker. © {new Date().getFullYear()}, all rights reserved.</p>
       </footer>
     </>
   );

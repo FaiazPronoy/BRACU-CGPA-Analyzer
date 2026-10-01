@@ -150,9 +150,10 @@ routes, so `dist/` works from anywhere:
 
 React 18, TypeScript and Vite. pdf.js reads the grade sheet. The chart is
 hand-drawn SVG, with no chart library. Fonts: Sora for the numbers and
-headings, Manrope for everything else. The look is meant to stay calm: a soft
-mist page, white cards without hard borders, and one aqua to indigo gradient
-kept for what matters, like the ring that fills towards 4.00. It follows the
+headings, Manrope for everything else. The look is bold and clear: a blush white
+page lit with red and blue, white cards that float, and one hot red gradient
+kept for what matters, like the ring that fills towards 4.00. Blue carries the
+links and the data. It follows the
 device's light or dark setting until you pick one.
 
 ## Not official
@@ -161,3 +162,13 @@ BRACU CGPA Analyzer is an independent student tool, not a BRAC University servic
 accurate as the published rules and the tests above make it, but for anything
 that really matters (graduation, probation, a retake plan) confirm with your
 advisor.
+
+## Authors
+
+Built by **Faiaz Abrar Zaman Pronoy** (lead developer) and **Sinthia Khandoker**.
+
+## Licence
+
+Copyright 2026 Faiaz Abrar Zaman Pronoy and Sinthia Khandoker. All rights
+reserved. You are welcome to read the code and run it to try it out, but not to
+copy it, hand it in as your own or publish it. See [LICENSE](LICENSE).
