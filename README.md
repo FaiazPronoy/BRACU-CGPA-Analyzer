@@ -121,7 +121,7 @@ For anything important, confirm with your advisor.
 
 ---
 
-## Authors
+## Author
 
 - **Faiaz Abrar Zaman Pronoy** (ফাইয়াজ আবরার জামান প্রনয়), developer
 
