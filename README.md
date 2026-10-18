@@ -7,6 +7,7 @@ Upload your grade sheet, see your real CGPA, and find the fastest way to raise i
 |---|---|
 | **Type** | Personal project, made for BRACU students (not for a course) |
 | **Made by** | Faiaz Abrar Zaman Pronoy |
+| **Live** | https://faiazpronoy.github.io/BRACU-CGPA-Analyzer/ |
 | **Runs** | Fully in the browser. No account, no server. Your grade sheet never leaves your device. |
 
 ---
