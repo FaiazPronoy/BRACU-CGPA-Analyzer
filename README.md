@@ -1,7 +1,7 @@
 # BRACU CGPA Analyzer
 
-**A CGPA calculator and planner for BRAC University students.**
-Upload your grade sheet, see your real CGPA, and find the fastest way to raise it.
+**A CGPA planner for BRAC University students.**
+Upload your grade sheet and plan ahead: find the fastest way to raise your CGPA.
 
 | | |
 |---|---|
