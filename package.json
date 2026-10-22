@@ -3,7 +3,7 @@
   "private": true,
   "version": "1.0.0",
   "type": "module",
-  "description": "An accurate CGPA calculator for BRACU: upload your grade sheet, see your CGPA, plan how to raise it.",
+  "description": "A CGPA planner for BRAC University students: upload your grade sheet and plan your way to a higher CGPA.",
   "scripts": {
     "dev": "vite",
     "build": "tsc --noEmit && vite build",

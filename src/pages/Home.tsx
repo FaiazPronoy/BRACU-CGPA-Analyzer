@@ -23,7 +23,7 @@ function Landing() {
       <section className="landing-hero">
         <div className="landing-copy">
           <p className="eyebrow">Made for BRAC University grade sheets</p>
-          <h1>Know your CGPA, and how to <span className="accent">raise&nbsp;it</span>.</h1>
+          <h1>Plan your way to a higher <span className="accent">CGPA</span>.</h1>
           <p className="lead">Upload the grade sheet from Connect. You get every semester at a glance, the repeats or retakes that lift your CGPA most, and what your target really takes.</p>
           <ol className="steps">
             <li><b>1</b><span>On Connect, open <em>Grade Sheet</em> and press <em>Download</em>.</span></li>
