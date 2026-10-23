@@ -1,5 +1,7 @@
 # BRACU CGPA Analyzer
 
+[![Tests and deploy](https://github.com/FaiazPronoy/BRACU-CGPA-Analyzer/actions/workflows/pages.yml/badge.svg)](https://github.com/FaiazPronoy/BRACU-CGPA-Analyzer/actions/workflows/pages.yml)
+
 **A CGPA planner for BRAC University students.**
 Upload your grade sheet and plan ahead: find the fastest way to raise your CGPA.
 
@@ -9,6 +11,12 @@ Upload your grade sheet and plan ahead: find the fastest way to raise your CGPA.
 | **Made by** | Faiaz Abrar Zaman Pronoy |
 | **Live** | https://faiazpronoy.github.io/BRACU-CGPA-Analyzer/ |
 | **Runs** | Fully in the browser. No account, no server. Your grade sheet never leaves your device. |
+
+| | |
+|---|---|
+| ![Upload your grade sheet](docs/home.jpg) | ![Your CGPA at a glance](docs/dashboard.jpg) |
+
+![Repeat or Retake planner](docs/repeat.jpg)
 
 ---
 
