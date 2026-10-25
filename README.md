@@ -97,7 +97,7 @@ Then open <http://localhost:5180>.
 
 ## Tests
 
-- `npm test` runs **69 unit tests**, one for every rule above
+- `npm test` runs **61 unit tests** that cover every rule above
 - `tools/browser_checks.py` opens every page in light and dark mode and checks colour contrast and phone width
 - Real grade sheets stay private. Put your own in `fixtures/private/` and `npm test` checks them too
 
