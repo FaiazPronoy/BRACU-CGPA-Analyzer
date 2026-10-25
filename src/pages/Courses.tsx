@@ -45,7 +45,6 @@ export default function Courses() {
   const years = useMemo(() => Array.from({ length: 12 }, (_, i) => new Date().getFullYear() + 1 - i), []);
   const counted = new Set([...s.counted.values()].map((a) => a.id));
 
-  // every semester, newest first, including one whose rows are still being typed
   const terms = useMemo(() => {
     const groups = new Map<string, Attempt[]>();
     for (const a of attempts) groups.set(a.semester, [...(groups.get(a.semester) || []), a]);

@@ -6,7 +6,6 @@ import type { ParsedSheet } from '../engine/gradesheet';
 import { detectProgram } from '../engine/programs';
 import { useStore } from '../store';
 
-// drop zone, then the check, then the grades go in and the dashboard opens
 export default function ImportSheet({ big = false }: { big?: boolean }) {
   const store = useStore();
   const [sheet, setSheet] = useState<{ parsed: ParsedSheet; file: string } | null>(null);

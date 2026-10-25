@@ -84,7 +84,6 @@ function Highlights({ rows }: { rows: TermRow[] }) {
   );
 }
 
-// the CGPA as a ring filling towards 4.00
 function Ring({ value }: { value: number }) {
   const r = 46;
   const round = 2 * Math.PI * r;

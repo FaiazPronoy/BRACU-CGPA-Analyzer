@@ -1,6 +1,3 @@
-// Real grade sheets, checked figure by figure. They belong to real students, so
-// they live in fixtures/private, which git ignores; drop any Connect grade sheet
-// PDF in there and run `npm test`. With the folder empty this test skips itself.
 import fs from 'fs';
 import path from 'path';
 import { describe, expect, it } from 'vitest';
@@ -9,7 +6,6 @@ import { checkSheet, parsePages, TextCell } from './gradesheet';
 
 const dir = path.resolve(__dirname, '../../fixtures/private');
 const files = fs.existsSync(dir) ? fs.readdirSync(dir).filter((f) => f.toLowerCase().endsWith('.pdf')) : [];
-// what an official transcript printed for the same student, where we have it
 const expectedPath = path.join(dir, 'expected.json');
 const expected: Record<string, { lists?: Record<string, string | null> }> = fs.existsSync(expectedPath) ? JSON.parse(fs.readFileSync(expectedPath, 'utf8')) : {};
 

@@ -3,7 +3,6 @@ import { GRADE_POINTS, LETTER_GRADES, MARKS } from '../engine/grades';
 
 const REMARK: Partial<Record<string, string>> = { 'A+': 'Exceptional', A: 'Excellent', B: 'Good', C: 'Fair', D: 'Poor', F: 'Failure' };
 
-// each rule as a question a student would actually ask
 const RULES: [string, string[]][] = [
   ['How is my CGPA worked out?', [
     'CGPA = sum of (grade points × credits) ÷ the credits that count. For each course only the attempt that counts is used; courses numbered 001 to 099 are remedial or non-credit and do not count.',

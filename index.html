@@ -38,17 +38,14 @@
       rel="stylesheet"
     />
     <script>
-      // the theme before the first paint, so nothing flashes
       try {
         var t = localStorage.getItem('cgpa-analyzer:theme');
-        // what was picked last time, or else what the device prefers
         if (t === 'dark' || (!t && matchMedia('(prefers-color-scheme: dark)').matches)) document.documentElement.classList.add('dark');
       } catch (e) {}
     </script>
   </head>
   <body>
     <div id="root">
-      <!-- shown until the app loads, and read by search engines -->
       <main style="max-width: 640px; margin: 48px auto; padding: 0 16px; font-family: Manrope, sans-serif; line-height: 1.6">
         <h1>BRACU CGPA Analyzer</h1>
         <p>A free CGPA calculator and planner for BRAC University students. Upload the grade sheet PDF from Connect, check every semester's GPA, and see which courses to repeat or retake to raise your CGPA the fastest.</p>

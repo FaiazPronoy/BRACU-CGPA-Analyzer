@@ -19,8 +19,6 @@ function useWidth() {
 
 const short = (name: string) => `${name.slice(0, 3)} ${name.slice(-2)}`;
 
-// CGPA as a line over each semester's GPA as a bar, the 2.00 probation line,
-// and the biggest rise and fall marked
 export default function Chart({ rows }: { rows: TermRow[] }) {
   const [box, width] = useWidth();
   const [active, setActive] = useState<number | null>(null);

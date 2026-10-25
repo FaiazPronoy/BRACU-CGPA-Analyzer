@@ -12,7 +12,6 @@ import { useStore } from '../store';
 interface Row { key: number; credits: number; grade: LetterGrade }
 let keys = 0;
 const newRow = (): Row => ({ key: keys++, credits: 3, grade: 'A-' });
-// the GPA needed, rounded up: a need of 3.6049 must not read as 3.60
 const ceil2 = (v: number) => Math.ceil(v * 100 - 1e-9) / 100;
 const label = (g: LetterGrade) => `${g} (${GRADE_POINTS[g].toFixed(2)})`;
 
@@ -138,17 +137,14 @@ export default function Plan() {
   const { totals: s, needed, valid, next } = useStore();
   const has = s.cgpa !== null;
   const [tool, setTool] = useState<Tool>(() => {
-    // the dashboard's "Reach a target" card opens this page straight on the target
     let asked: string | null = null;
     try {
       asked = sessionStorage.getItem('cgpa-analyzer:planTab');
       sessionStorage.removeItem('cgpa-analyzer:planTab');
     } catch {
-      /* fine */
     }
     return asked === 'target' ? 'target' : has ? 'next' : 'quick';
   });
-  // courses already at A or A+ have nothing to gain, so the engine leaves them out
   const pool = next ? candidates(valid, next, 'A') : [];
   const shown: Tool = has ? tool : 'quick';
 

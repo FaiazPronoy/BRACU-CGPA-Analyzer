@@ -1,6 +1,5 @@
 import { ReactNode } from 'react';
 
-// line icons drawn for this site
 const icon = (d: ReactNode) =>
   function Icon() {
     return (
@@ -33,4 +32,3 @@ export const Target = icon(<><circle cx="12" cy="12" r="9" /><circle cx="12" cy=
 export const Spark = icon(<><path d="M12 3v4M12 17v4M3 12h4M17 12h4" /><path d="m6 6 2.5 2.5M15.5 15.5 18 18M6 18l2.5-2.5M15.5 8.5 18 6" /></>);
 export const Undo = icon(<><path d="M9 14 4 9l5-5" /><path d="M4 9h10a6 6 0 0 1 0 12h-3" /></>);
 
-// a loose, hand-drawn ring, the way a teacher circles a mark

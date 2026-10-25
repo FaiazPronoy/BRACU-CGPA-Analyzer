@@ -6,7 +6,6 @@ import { useStore } from '../store';
 
 interface Row { key: string; code: string; title: string; credits: number; grade: Grade; dropped: boolean; added?: boolean }
 
-// the sandbox holds every course that counts; the list only shows the ones worth changing
 const fromAttempts = (attempts: Attempt[]): Row[] =>
   [...totals(attempts).counted.values()]
     .sort((a, b) => semesterIndex(b.semester) - semesterIndex(a.semester) || a.code.localeCompare(b.code))
@@ -17,15 +16,12 @@ const cgpaOfRows = (rows: Row[]) =>
 
 const points = (g: string) => GRADE_POINTS[g as keyof typeof GRADE_POINTS];
 
-// try other grades without touching the real ones: change a grade, leave a
-// course out, or add the courses coming next
 export default function WhatIf() {
   const { valid, totals: s } = useStore();
   const [rows, setRows] = useState(() => fromAttempts(valid));
   const original = new Map(valid.map((a) => [a.id, a.grade]));
   const set = (key: string, patch: Partial<Row>) => setRows(rows.map((r) => (r.key === key ? { ...r, ...patch } : r)));
   const changed = rows.filter((r) => r.added || r.dropped || r.grade !== original.get(r.key)).length;
-  // A and A+ are already 4.00, and zero-credit courses cannot move the CGPA, so both stay out of the list
   const shown = rows.filter((r) => {
     const was = original.get(r.key) ?? r.grade;
     return r.added || (points(was) !== undefined && points(was) < 4 && r.credits > 0);

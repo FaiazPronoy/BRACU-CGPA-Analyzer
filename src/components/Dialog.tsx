@@ -1,6 +1,5 @@
 import { ReactNode, useEffect, useRef } from 'react';
 
-// the browser's own <dialog>: focus is trapped, Esc closes it, and the page behind goes quiet
 export default function Dialog({ open, onClose, title, children, wide = false }: {
   open: boolean; onClose: () => void; title: string; children: ReactNode; wide?: boolean;
 }) {

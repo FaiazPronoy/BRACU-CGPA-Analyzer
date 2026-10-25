@@ -9,7 +9,6 @@ const LABEL: Record<string, string> = {
   attempted: 'credits attempted', earned: 'credits earned', gpa: 'GPA', cumAttempted: 'total attempted', cumEarned: 'total earned', cgpa: 'CGPA',
 };
 
-// after an upload: what was found, and whether every semester matches the sheet
 export default function SheetCheck({ sheet, file, replacing, onUse, onCancel }: {
   sheet: ParsedSheet | null; file: string; replacing: boolean; onUse: () => void; onCancel: () => void;
 }) {

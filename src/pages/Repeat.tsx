@@ -6,10 +6,8 @@ import { count, signedValue, two } from '../format';
 import { useStore } from '../store';
 
 const HOPES: LetterGrade[] = ['A', 'A-', 'B+', 'B'];
-// "an A", "a B+": the grade the way it is said in a sentence
 const said = (g: LetterGrade) => (g.startsWith('A') ? `an ${g}` : `a ${g}`);
 
-// how far back a course was first taken, counted up to the semester being planned
 const since = (c: Candidate, next: string) => semesterIndex(next) - semesterIndex(c.firstSemester);
 
 function status(c: Candidate, next: string) {
@@ -30,7 +28,6 @@ export default function Repeat() {
   const [picked, setPicked] = useState<Record<string, LetterGrade | undefined>>({});
   const [showAll, setShowAll] = useState(false);
 
-  // courses already at the grade hoped for (A and A+ are both 4.00) have nothing to gain
   const all = useMemo(() => (next ? candidates(valid, next, hope) : []), [valid, next, hope]);
   const pool = all.filter((c) => (wide ? c.allowed !== 'no' : c.allowed === 'yes'));
   const max = Math.max(1, Math.min(10, pool.length));
@@ -67,7 +64,6 @@ export default function Repeat() {
             failed (F) again. Either way, the new grade takes the place of the old one in your&nbsp;CGPA.
           </p>
         </div>
-        {/* the starting point, so every number below reads against it */}
         <div className="now-card" aria-label="Your CGPA now">
           <span>Your CGPA now</span>
           <b className="mono">{two(s.cgpa)}</b>

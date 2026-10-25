@@ -1,6 +1,5 @@
 name: Deploy to GitHub Pages
 
-# every push to main runs the tests, builds the site and publishes dist/
 on:
   push:
     branches: [main]

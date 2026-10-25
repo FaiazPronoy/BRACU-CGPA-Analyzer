@@ -2,8 +2,6 @@ import { useState } from 'react';
 import { GRADE_POINTS, LETTER_GRADES, LetterGrade } from '../engine/grades';
 import { two } from '../format';
 
-// for anyone without a grade sheet: works from the CGPA and credits on Connect.
-// A CGPA is already rounded, so this is an estimate and says so
 export default function QuickEstimate({ intro = 'No grade sheet at hand? Type the CGPA and credits from Connect.' }: { intro?: string }) {
   const [cgpa, setCgpa] = useState(3.2);
   const [credits, setCredits] = useState(60);

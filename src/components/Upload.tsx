@@ -2,7 +2,6 @@ import { ChangeEvent, DragEvent, useRef, useState } from 'react';
 import { FileIcon, Lock, Upload as UploadIcon } from './bits';
 import { ParsedSheet, readGradeSheet } from '../engine/gradesheet';
 
-// the grade sheet drop zone: drag the PDF in or pick it
 export default function Upload({ onRead, big = false }: { onRead: (sheet: ParsedSheet, file: string) => void; big?: boolean }) {
   const input = useRef<HTMLInputElement>(null);
   const [busy, setBusy] = useState(false);

@@ -1,10 +1,3 @@
-/*! BRACU CGPA Analyzer. Copyright 2026 Faiaz Abrar Zaman Pronoy. All rights reserved. See LICENSE. */
-/* BRACU CGPA Analyzer. Bold and clear: a pink to sky blue page lit with red and
-   blue, white cards that float rather than sit in boxes, and one hot red
-   gradient for the numbers that matter. Blue is the second voice: links,
-   the semester bars, the buttons you press. Colours are variables here; the
-   dark theme is the second block. */
-
 :root {
   --bg: #FFEFF3;
   --card: #FFFFFF;
@@ -13,7 +6,6 @@
   --line-2: #E5B4BE;
   --ink: #15142A;
   --ink-2: #5A5068;
-  /* the dark blue that anchors the red: primary buttons and the logo tile */
   --navy: #0F1C4D;
   --navy-2: #1E3280;
   --on-navy: #FFFFFF;
@@ -21,7 +13,6 @@
   --data-lo: #E3EAFF;
   --grad-a: #FF3355;
   --grad-b: #D0102E;
-  /* red into blue, deep enough to be read as text on the blush page */
   --text-a: #D0102E;
   --text-b: #1E4FD8;
   --pen: #B3123A;
@@ -35,7 +26,6 @@
   --glow-2: rgb(40 90 255 / 0.3);
   --glow-3: rgb(150 70 255 / 0.22);
   --glow-4: rgb(0 160 255 / 0.2);
-  /* pink at the top, lavender in the middle, sky blue at the bottom */
   --wash: linear-gradient(165deg, #FFE9EF 0%, #F6ECFF 50%, #E7F0FF 100%);
   --shadow: 0 1px 2px rgb(40 10 30 / 0.05), 0 14px 34px -20px rgb(120 10 40 / 0.28);
   --shadow-lift: 0 2px 4px rgb(40 10 30 / 0.06), 0 22px 44px -22px rgb(120 10 40 / 0.36);
@@ -95,7 +85,6 @@ body {
   line-height: 1.6;
   -webkit-font-smoothing: antialiased;
 }
-/* three soft lights behind everything, so the page is never flat */
 body::before {
   content: '';
   position: fixed;
@@ -137,7 +126,6 @@ dd {
 p {
   margin: 0;
 }
-/* longer reading text is justified, hyphenated so the spacing stays even */
 .landing-copy p,
 .hero-note,
 .card p,
@@ -254,7 +242,6 @@ svg {
   }
 }
 
-/* ------------------------------------------------------------ header */
 .bar,
 .deck {
   position: sticky;
@@ -278,7 +265,6 @@ svg {
   color: var(--ink);
   text-decoration: none;
 }
-/* the logo: a ring most of the way round, the way the CGPA is shown */
 .brand-mark {
   display: grid;
   place-items: center;
@@ -342,8 +328,6 @@ svg {
   display: none;
 }
 
-/* the four sections as one segmented control, with a thumb that slides to
-   the one you are on */
 .keys {
   position: relative;
   display: grid;
@@ -436,7 +420,6 @@ svg {
   }
 }
 
-/* ------------------------------------------------------------ page */
 .main {
   padding-top: 32px;
   padding-bottom: 32px;
@@ -446,7 +429,6 @@ svg {
   gap: 8px;
   justify-items: start;
 }
-/* a heading with the current CGPA pinned beside it */
 .page-head-split {
   grid-template-columns: minmax(0, 1fr) auto;
   align-items: end;
@@ -542,7 +524,6 @@ svg {
   font-size: 0.84rem;
 }
 
-/* ------------------------------------------------------------ controls */
 .btn {
   display: inline-flex;
   align-items: center;
@@ -693,7 +674,6 @@ svg {
   background: var(--pen-lo);
   color: var(--pen);
 }
-/* white on the light end of the gradient is too faint, so this one runs deep in both themes */
 .pill.navy {
   background: linear-gradient(135deg, #D0102E, #1E4FD8);
   color: #fff;
@@ -762,7 +742,6 @@ table.plain .num {
   font-family: var(--mono);
 }
 
-/* ------------------------------------------------------------ landing */
 .landing {
   display: grid;
   gap: 48px;
@@ -877,7 +856,6 @@ table.plain .num {
   font-size: 0.9rem;
 }
 
-/* the grade sheet drop zone */
 .drop {
   display: flex;
   flex-wrap: wrap;
@@ -937,9 +915,6 @@ table.plain .num {
   height: 15px;
 }
 
-/* ------------------------------------------------------------ dashboard */
-/* the CGPA as a ring filling towards 4.00, with the three things that go
-   with it beside it and nothing else */
 .hero {
   display: grid;
   gap: clamp(20px, 4vw, 44px);
@@ -1077,7 +1052,6 @@ table.plain .num {
   font-weight: 600;
 }
 
-/* the next steps: three quiet rows, not three more boxes */
 .actions {
   display: grid;
   gap: 12px;
@@ -1183,7 +1157,6 @@ table.plain .num {
 .facts .pen {
   color: var(--pen);
 }
-/* grades as one row of bars, tallest wins */
 .grade-counts {
   list-style: none;
   display: flex;
@@ -1254,7 +1227,6 @@ table.plain .num {
   display: none;
 }
 
-/* the chart */
 .chart {
   display: block;
   overflow: visible;
@@ -1327,7 +1299,6 @@ table.plain .num {
   border-top: 2px dashed var(--pen);
 }
 
-/* ------------------------------------------------------------ repeat */
 .controls {
   display: grid;
   gap: 18px;
@@ -1508,7 +1479,6 @@ table.plain .num {
   gap: 6px;
 }
 
-/* the three ways to repeat, side by side */
 .compare {
   display: grid;
   gap: 12px;
@@ -1551,7 +1521,6 @@ table.plain .num {
   max-width: 64ch;
 }
 
-/* what if */
 .whatif {
   display: grid;
   gap: 12px;
@@ -1601,7 +1570,6 @@ table.plain .num {
   }
 }
 
-/* ------------------------------------------------------------ plan */
 .segmented {
   display: inline-grid;
   grid-auto-flow: column;
@@ -1755,7 +1723,6 @@ table.plain .num {
   margin-top: 12px;
 }
 
-/* ------------------------------------------------------------ courses */
 .toolbar {
   display: flex;
   flex-wrap: wrap;
@@ -1864,7 +1831,6 @@ table.plain .num {
   }
 }
 
-/* the CGPA pinned to the bottom while courses are edited */
 .live {
   position: sticky;
   bottom: 16px;
@@ -1928,7 +1894,6 @@ table.plain .num {
   }
 }
 
-/* ------------------------------------------------------------ rules */
 .rules-grid {
   display: grid;
   gap: 24px;
@@ -1941,7 +1906,6 @@ table.plain .num {
   }
 }
 
-/* checking it by hand */
 .by-hand {
   display: grid;
   gap: 10px;
@@ -1979,7 +1943,6 @@ table.plain .num {
   height: 16px;
 }
 
-/* ------------------------------------------------------------ dialog */
 .dialog {
   width: min(92vw, 480px);
   max-height: 90vh;

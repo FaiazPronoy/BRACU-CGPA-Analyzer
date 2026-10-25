@@ -10,10 +10,8 @@ import { useStore } from './store';
 
 export const PAGES = ['home', 'repeat', 'plan', 'courses', 'rules'] as const;
 export type Page = (typeof PAGES)[number];
-// the old addresses still work
 const OLD: Record<string, Page> = { overview: 'home', boost: 'repeat', raise: 'repeat', grades: 'courses' };
 
-// plain hash routes (#/repeat), so the built site works on any static host
 function usePage(): Page {
   const read = (): Page => {
     const p = window.location.hash.replace(/^#\/?/, '');
@@ -42,13 +40,11 @@ function useDark() {
     try {
       localStorage.setItem('cgpa-analyzer:theme', dark ? 'dark' : 'light');
     } catch {
-      /* fine */
     }
   }, [dark]);
   return [dark, () => setDark((d) => !d)] as const;
 }
 
-// the four things people come to do, in the order they usually do them
 const NAV: { page: Page; label: string; icon: ReactNode }[] = [
   { page: 'home', label: 'My CGPA', icon: <Gauge /> },
   { page: 'repeat', label: 'Repeat or Retake', icon: <Rise /> },
@@ -79,7 +75,6 @@ export default function App() {
 
   const brand = (
     <a href="#/" className="brand" aria-label="BRACU CGPA Analyzer, home">
-      {/* a ring most of the way round, like the CGPA on the dashboard */}
       <span className="brand-mark" aria-hidden="true">
         <svg viewBox="0 0 36 36">
           <defs>
@@ -132,7 +127,6 @@ export default function App() {
     <>
       <a href="#main" className="skip" onClick={(e) => { e.preventDefault(); document.getElementById('main')?.focus(); }}>Skip to the calculator</a>
       {has ? (
-        // with grades: the header is a row of keys, one per section
         <>
           <header className="deck">
             <div className="wrap deck-inner">

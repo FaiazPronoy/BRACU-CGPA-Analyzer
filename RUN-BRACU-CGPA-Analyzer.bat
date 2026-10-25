@@ -27,7 +27,6 @@ if errorlevel 1 (
 echo [2/2] Starting BRACU CGPA Analyzer at http://localhost:5180
 echo       Close this window to stop it.
 echo.
-rem open the browser a few seconds later, once the server is up
 start "" cmd /c "timeout /t 4 /nobreak >nul & start http://localhost:5180"
 call npm run dev
 pause

@@ -4,7 +4,6 @@ import { Restart } from './bits';
 import Dialog from './Dialog';
 import { useStore } from '../store';
 
-// wipes every grade from this browser, after asking once
 export default function StartOver({ compact = false }: { compact?: boolean }) {
   const { clear, valid } = useStore();
   const [open, setOpen] = useState(false);

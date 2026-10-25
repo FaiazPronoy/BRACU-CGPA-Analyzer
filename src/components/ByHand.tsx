@@ -1,6 +1,5 @@
 import { useStore } from '../store';
 
-// the whole CGPA, step by step, so anyone can redo it on a phone calculator
 export default function ByHand() {
   const { totals: s } = useStore();
   const points = s.cgpa !== null ? s.sums.points / 1000 : null;

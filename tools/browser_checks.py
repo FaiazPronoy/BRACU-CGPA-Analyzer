@@ -1,23 +1,4 @@
 #!/usr/bin/env python3
-"""
-Browser checks for BRACU CGPA Analyzer, in a real browser through Playwright.
-
-  1. pages     every page, empty and with a transcript, loads without errors
-  2. contrast  every piece of text against WCAG AA, light and dark
-  3. phone     nothing scrolls sideways at 390 px
-  4. reset     Start over asks first, then clears every grade
-  5. sheet     a real grade sheet from fixtures/private, if there is one,
-               imports and every semester matches
-
-Screenshots of each page go to tools/shots (gitignored).
-
-Start the site first (npm run dev, on :5180), then:
-
-  python tools/browser_checks.py
-
-Uses the Edge that ships with Windows; set HB_BROWSER=chrome for Chrome.
-Needs: pip install playwright
-"""
 import glob, os, sys
 from playwright.sync_api import sync_playwright
 
@@ -50,12 +31,10 @@ CONTRAST_JS = r"""
                                  b: top.b * top.a + under.b * (1 - top.a), a: 1});
   const ratio = (a, b) => { const x = lum(a), y = lum(b); return (Math.max(x, y) + .05) / (Math.min(x, y) + .05); };
 
-  // every background this element could be sitting on; a gradient gives one per stop
   const backgrounds = el => {
     let stack = [];
     for (let e = el; e; e = e.parentElement) {
       const cs = getComputedStyle(e);
-      // gradient text paints its letters, not what is behind them
       const clipped = (cs.backgroundClip || cs.webkitBackgroundClip) === 'text';
       if (cs.backgroundImage.includes('gradient') && !clipped) {
         const stops = [...cs.backgroundImage.matchAll(/rgba?\([^)]+\)/g)].map(m => parse(m[0])).filter(s => s.a > 0);
@@ -63,8 +42,6 @@ CONTRAST_JS = r"""
           const solid = stops.filter(s => s.a >= 1), glass = stops.filter(s => s.a < 1);
           let under = solid;
           if (!under.length) {
-            // a see-through highlighter: test it over whatever is behind it
-            // (the dot grid on body is one, painted over body's own colour)
             let base = parse(cs.backgroundColor);
             if (base && base.a < 1) base = null;
             for (let b = e.parentElement; b && !base; b = b.parentElement) {
@@ -98,7 +75,6 @@ CONTRAST_JS = r"""
     if (cs.visibility === 'hidden' || cs.display === 'none' || box.width === 0 || box.height === 0) continue;
     if (el.closest('[aria-hidden="true"], .sr-only, [hidden], option, script, style, iframe, .ql-editor .ql-blank')) continue;
     if (el.closest('button:disabled, input:disabled, [aria-disabled="true"], .ant-select-disabled')) continue;
-    // gradient text is only as readable as its palest end, so each stop is a colour to test
     const textClip = (cs.backgroundClip || cs.webkitBackgroundClip) === 'text' && cs.backgroundImage.includes('gradient');
     const fgs = textClip
       ? [...cs.backgroundImage.matchAll(/rgba?\([^)]+\)/g)].map(m => parse(m[0])).filter(Boolean)
@@ -148,7 +124,6 @@ def main():
             errors = []
             page.on("pageerror", lambda e: errors.append(str(e)))
             page.on("console", lambda m: errors.append(m.text) if m.type == "error" else None)
-            # empty first, then with the sample transcript
             fails, total = [], 0
             for stage in ("empty", "sample"):
                 if stage == "sample":
@@ -180,7 +155,6 @@ def main():
                 page.screenshot(path=os.path.join(SHOTS, "phone-%s-%s.png" % (stage, name)), full_page=True)
         check("nothing scrolls sideways at 390 px", not wide, wide)
 
-        # Start over: cancelling keeps the grades, confirming clears them
         page.goto(BASE + "#/home")
         page.get_by_role("button", name="Start over with a new grade sheet").click()
         page.get_by_role("button", name="Keep my grades").click()

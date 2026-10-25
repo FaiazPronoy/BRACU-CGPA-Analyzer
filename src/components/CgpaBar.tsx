@@ -1,8 +1,6 @@
 import { Undo } from './bits';
 import { signedValue, two } from '../format';
 
-// pinned to the bottom while grades are being changed: the CGPA now, next to
-// what it was, so every edit shows its effect without scrolling back up
 export default function CgpaBar({ now, before, changed, hint, undoLabel, onUndo }: {
   now: number | null;
   before: number | null;
@@ -16,7 +14,6 @@ export default function CgpaBar({ now, before, changed, hint, undoLabel, onUndo 
     <div className="live" role="status" aria-live="polite">
       <div className="live-now">
         <span>Your CGPA</span>
-        {/* the key restarts the flash every time the number changes */}
         <b key={now ?? 'none'} className="live-number">{now !== null ? two(now) : 'n/a'}</b>
       </div>
       {changed && before !== null && now !== null ? (

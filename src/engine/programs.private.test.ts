@@ -1,4 +1,3 @@
-// Which program each real grade sheet in fixtures/private says it is.
 import fs from 'fs';
 import path from 'path';
 import { describe, expect, it } from 'vitest';
