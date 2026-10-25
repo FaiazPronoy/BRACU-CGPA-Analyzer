@@ -2,8 +2,10 @@
   "name": "bracu-cgpa-analyzer",
   "private": true,
   "version": "1.0.0",
-  "type": "module",
   "description": "A CGPA planner for BRAC University students: upload your grade sheet and plan your way to a higher CGPA.",
+  "author": "Faiaz Abrar Zaman Pronoy",
+  "license": "UNLICENSED",
+  "type": "module",
   "scripts": {
     "dev": "vite",
     "build": "tsc --noEmit && vite build",
@@ -17,12 +19,12 @@
     "react-dom": "^18.3.1"
   },
   "devDependencies": {
-    "@types/node": "^20.19.43",
+    "@types/node": "^22.20.5",
     "@types/react": "^18.3.31",
     "@types/react-dom": "^18.3.7",
     "@vitejs/plugin-react": "^4.7.0",
     "typescript": "^5.9.3",
-    "vite": "^5.4.21",
-    "vitest": "^2.1.9"
+    "vite": "^6.4.5",
+    "vitest": "^5.0.5"
   }
 }
