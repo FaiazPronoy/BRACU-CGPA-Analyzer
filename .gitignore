@@ -6,6 +6,7 @@ dist/
 Thumbs.db
 .vscode/
 .idea/
+# real grade sheets used to check the maths; they belong to real students
 fixtures/private/
 tools/out/
 __pycache__/
