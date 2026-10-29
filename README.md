@@ -132,7 +132,7 @@ For anything important, confirm with your advisor.
 
 ## Author
 
-- **Faiaz Abrar Zaman Pronoy** (ফাইয়াজ আবরার জামান প্রনয়), developer
+- **Faiaz Abrar Zaman Pronoy**, developer
 
 ## Licence
 
